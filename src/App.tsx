@@ -10,7 +10,7 @@ import PublicLayout from "./components/PublicLayout";
 import ProtectedLayout from "./components/ProtectedLayout";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-import History from "./pages/History";
+import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Write from "./pages/Write";
 import Profile from "./pages/Profile";
@@ -28,7 +28,7 @@ function App() {
               </Route>
 
               <Route element={<ProtectedLayout />}>
-                  <Route path="/history" element={<History />} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/write" element={<Write />} />
                   <Route path="/profile" element={<Profile />} />

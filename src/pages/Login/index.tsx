@@ -1,10 +1,7 @@
 import {
-    AlipayOutlined,
     LockOutlined,
     MobileOutlined,
-    TaobaoOutlined,
     UserOutlined,
-    WeiboOutlined,
 } from '@ant-design/icons';
 import {
     LoginFormPage,
@@ -13,49 +10,31 @@ import {
     ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Divider, message, Space, Tabs } from 'antd';
-import type { CSSProperties } from 'react';
 import { useState } from 'react';
+import logo from './logo.png';
+import axios, {AxiosError} from 'axios';
 
 type LoginType = 'phone' | 'account';
 
-const iconStyles: CSSProperties = {
-    color: 'rgba(0, 0, 0, 0.2)',
-    fontSize: '18px',
-    verticalAlign: 'middle',
-    cursor: 'pointer',
-};
-
 function Login() {
-    const [loginType, setLoginType] = useState<LoginType>('phone');
+    const [loginType, setLoginType] = useState<LoginType>('account');
     return (
         <div style={{ backgroundColor: 'white', height: 'calc(100vh - 48px)' }}>
             <LoginFormPage
                 backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
-                logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                title="Github"
-                subTitle="全球最大的代码托管平台"
-                activityConfig={{
-                    style: {
-                        boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.2)',
-                        color: '#fff',
-                        borderRadius: 8,
-                        backgroundColor: '#1677FF',
-                    },
-                    title: '活动标题，可配置图片',
-                    subTitle: '活动介绍说明文字',
-                    action: (
-                        <Button
-                            size="large"
-                            style={{
-                                borderRadius: 20,
-                                background: '#fff',
-                                color: '#1677FF',
-                                width: 120,
-                            }}
-                        >
-                            去看看
-                        </Button>
-                    ),
+                logo={logo}
+                title="行者平台"
+                subTitle="货车司机打分评价平台"
+                onFinish={async (values) => {
+                  try {
+                    const result = await axios.post('/api/login', values);
+                    console.log(result)
+                  } catch (e) {
+                    const err = e as AxiosError<ResultMessage>;
+                    message.error(err.message);
+                    console.log(err);
+                  }
+                  return true;
                 }}
                 actions={
                     <div
@@ -67,54 +46,19 @@ function Login() {
                         }}
                     >
                         <Divider plain>
-              <span style={{ color: '#CCC', fontWeight: 'normal', fontSize: 14 }}>
-                其他登录方式
-              </span>
+                          <span style={{ color: '#CCC', fontWeight: 'normal', fontSize: 14 }}>
+                            或者
+                          </span>
                         </Divider>
-                        <Space align="center" size={24}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flexDirection: 'column',
-                                    height: 40,
-                                    width: 40,
-                                    border: '1px solid #D4D8DD',
-                                    borderRadius: '50%',
-                                }}
-                            >
-                                <AlipayOutlined style={{ ...iconStyles, color: '#1677FF' }} />
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flexDirection: 'column',
-                                    height: 40,
-                                    width: 40,
-                                    border: '1px solid #D4D8DD',
-                                    borderRadius: '50%',
-                                }}
-                            >
-                                <TaobaoOutlined style={{ ...iconStyles, color: '#FF6A10' }} />
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    flexDirection: 'column',
-                                    height: 40,
-                                    width: 40,
-                                    border: '1px solid #D4D8DD',
-                                    borderRadius: '50%',
-                                }}
-                            >
-                                <WeiboOutlined style={{ ...iconStyles, color: '#333333' }} />
-                            </div>
-                        </Space>
+                        <Button
+                            style={{ gap: '24px' }}
+                            size="large"
+                            type="default"
+                            href="/signup"
+                            block
+                        >
+                          注册
+                        </Button>
                     </div>
                 }
             >

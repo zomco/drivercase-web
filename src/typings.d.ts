@@ -19,3 +19,11 @@ type AuthContextType = {
     login: (string) => Promise<void>;
     logout: () => void;
 }
+
+type ResultMessage = {
+    success: boolean,
+    message: string,
+    code: number,
+    timestamp: number,
+    result: any
+}
