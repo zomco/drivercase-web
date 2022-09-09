@@ -8,7 +8,7 @@ function Terms() {
         justifyContent: 'center',
         alignItems: 'center'
     }}>
-        这是用户协议
+        <h1>这是服务条款</h1>
     </div>;
 }
 
