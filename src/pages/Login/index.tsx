@@ -12,12 +12,14 @@ import {
 import { Button, Divider, message, Space, Tabs } from 'antd';
 import { useState } from 'react';
 import logo from './logo.png';
-import axios, {AxiosError} from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
+import {useAuth} from "../../hooks/useAuth";
 
 type LoginType = 'phone' | 'account';
 
 function Login() {
     const [loginType, setLoginType] = useState<LoginType>('account');
+    const { login } = useAuth();
     return (
         <div style={{ backgroundColor: 'white', height: 'calc(100vh - 48px)' }}>
             <LoginFormPage
@@ -25,16 +27,20 @@ function Login() {
                 logo={logo}
                 title="行者平台"
                 subTitle="货车司机打分评价平台"
-                onFinish={async (values) => {
+                onFinish={async (values: LoginParam) => {
                   try {
-                    const result = await axios.post('/api/login', values);
-                    console.log(result)
+                    const response: AxiosResponse<ResultData<LoginResult>, LoginParam> = await axios.post('/api/login', values);
+                    await login(response.data.result);
+                    return true;
                   } catch (e) {
-                    const err = e as AxiosError<ResultMessage>;
-                    message.error(err.message);
-                    console.log(err);
+                    const err = e as AxiosError<ResultData<LoginResult>, LoginParam>;
+                    const data: ResultData<LoginResult> | undefined = err.response?.data;
+                    if (data) {
+                      message.error(data.message);
+                    } else {
+                      message.error(err.message);
+                    }
                   }
-                  return true;
                 }}
                 actions={
                     <div
@@ -66,10 +72,11 @@ function Login() {
                     centered
                     activeKey={loginType}
                     onChange={(activeKey) => setLoginType(activeKey as LoginType)}
-                >
-                    <Tabs.TabPane key={'account'} tab={'账号密码登录'} />
-                    <Tabs.TabPane key={'phone'} tab={'手机号登录'} />
-                </Tabs>
+                    items={[
+                      { label: '账号密码登录', key: 'account' },
+                      // { label: '手机号登录', key: 'phone' },
+                    ]}
+                />
                 {loginType === 'account' && (
                     <>
                         <ProFormText
@@ -78,12 +85,10 @@ function Login() {
                                 size: 'large',
                                 prefix: <UserOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'用户名: admin or user'}
+                            placeholder={'用户名'}
                             rules={[
-                                {
-                                    required: true,
-                                    message: '请输入用户名!',
-                                },
+                                { required: true, whitespace: true },
+                              { pattern: /^(?=[a-zA-Z0-9._]{5,10}$)(?!.*[_.]{2})[^_.].*[^_.]$/, message: '请输入符合规则的用户名' }
                             ]}
                         />
                         <ProFormText.Password
@@ -92,12 +97,10 @@ function Login() {
                                 size: 'large',
                                 prefix: <LockOutlined className={'prefixIcon'} />,
                             }}
-                            placeholder={'密码: ant.design'}
+                            placeholder={'密码'}
                             rules={[
-                                {
-                                    required: true,
-                                    message: '请输入密码！',
-                                },
+                                { required: true, whitespace: true },
+                              { pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/, message: '请输入符合规则的密码'}
                             ]}
                         />
                     </>

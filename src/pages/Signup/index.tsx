@@ -17,10 +17,13 @@ import { useRef } from 'react';
 import React from "react";
 import level from './level.json';
 import axios, {AxiosError} from "axios";
+import {useAuth} from "../../hooks/useAuth";
+import {Link} from "react-router-dom";
 
 
 function Signup() {
     const formRef = useRef<ProFormInstance>();
+    const { login } = useAuth();
     const param: UserParam = {};
 
     return (
@@ -40,13 +43,17 @@ function Signup() {
                         formRef={formRef}
                         onFinish={async () => {
                           try {
-                            const result = await axios.post('/api/signup', param);
-                            console.log(result)
-                            message.success('提交成功');
+                            const data: ResultData<LoginResult> = await axios.post('/api/signup', param);
+                            await login(data.result);
+                            return true;
                           } catch (e) {
-                            const err = e as AxiosError<ResultMessage>;
-                            message.error(err.message);
-                            console.log(err);
+                            const err = e as AxiosError<ResultData<LoginResult>, LoginParam>;
+                            const data: ResultData<LoginResult> | undefined = err.response?.data;
+                            if (data) {
+                              message.error(data.message);
+                            } else {
+                              message.error(err.message);
+                            }
                           }
                         }}
                         formProps={{
@@ -119,7 +126,7 @@ function Signup() {
                                   name="privacy"
                                   noStyle
                               >
-                                同意 <a href="/privacy">隐私协议</a>
+                                同意 <Link to="/privacy">隐私协议</Link>
                               </ProFormCheckbox>
                             </div>
 
@@ -130,7 +137,7 @@ function Signup() {
                                   name="terms"
                                   noStyle
                               >
-                                同意 <a href="/terms">服务条款</a>
+                                同意 <Link to="/terms">服务条款</Link>
                               </ProFormCheckbox>
                             </div>
                         </StepsForm.StepForm>

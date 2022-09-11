@@ -10,23 +10,52 @@ declare module '*.gif';
 declare module '*.bmp';
 declare module '*.tiff';
 
+/**
+ * Auth
+ */
+
 interface AuthProviderProps {
     children: React.ReactNode;
 }
 
-type AuthContextType = {
-    user: string;
-    login: (string) => Promise<void>;
-    logout: () => void;
+type AuthUser = {
+    accessToken: string,
+    username: string,
 }
 
-type ResultMessage = {
+type AuthContextType = {
+    user: AuthUser;
+    login: (string) => Promise<void>;
+    logout: () => void;
+    post: <P = any, R = any>(endpoint: string, param: P) => Promise<R | undefined>;
+    put: <P = any, R = any>(endpoint: string, param: P) => Promise<R | undefined>;
+    get: <R = any>(endpoint: string) => Promise<R | undefined>;
+    del: <R = any>(endpoint: string) => Promise<R | undefined>;
+}
+
+type ResultData<T> = {
     success: boolean,
     message: string,
     code: number,
     timestamp: number,
-    result: any
+    result: T
 }
+
+
+type LoginParam = {
+    username: string,
+    password: string,
+    autoLogin: boolean,
+}
+
+type LoginResult = {
+    accessToken: string,
+    username: string,
+}
+
+/**
+ * User
+ */
 
 type UserBasicParam = {
     username: string,
@@ -63,4 +92,45 @@ type UserParam = {
     company?: UserCompanyParam,
     representative?: UserRepresentativeParam,
     operator?: UserOperatorParam,
+}
+
+/**
+ * Case
+ */
+
+enum CaseVisibility {
+    PRIVATE,
+    PUBLIC,
+    AUTHORIZE,
+}
+
+enum CaseStatus {
+    WAITING,
+    COMMENT,
+    TEMPLATE,
+    APPROVED,
+}
+
+type CaseReviewParam = {
+    status: string,
+    review: string,
+}
+
+type CaseCreateParam = {
+    name: string,
+    code: string,
+    description: string,
+    visibility: CaseVisibility,
+    files: string[],
+}
+
+type CaseResult = {
+    id: string,
+    userId: string,
+    name: string,
+    code: string,
+    description: string,
+    visibility: CaseVisibility,
+    status: CaseStatus,
+    review: string,
 }

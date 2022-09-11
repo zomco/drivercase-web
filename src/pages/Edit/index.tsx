@@ -4,33 +4,68 @@ import {
   ProForm,
   ProFormText,
   ProFormTextArea,
-  ProFormRadio, ProFormUploadDragger,
+  ProFormRadio, ProFormUploadDragger, ProFormUploadButton
 } from '@ant-design/pro-components';
 import { useRef } from 'react';
 import {useAuth} from "../../hooks/useAuth";
+import {useParams} from "react-router-dom";
+import {UploadFile, Upload, Button} from "antd";
 
 function Write() {
     const formRef = useRef<ProFormInstance>();
-    const { post, get } = useAuth();
+    const { put, get } = useAuth();
+    const { id } = useParams();
+    const [files, setFiles] = useState<UploadFile[]>([]);
+    useEffect (() => {
+      const fetchData = async () => {
+        const result = await get<string[]>(`/api/p/case/${id}/file`);
+        const fileResult = result?.map(value => ({
+          name: value,
+          url: `/api/file/4/${value}`,
+          crossOrigin: 'use-credentials',
+          status: 'done'
+        }));
+
+        // @ts-ignore
+        setFiles(fileResult);
+      }
+      fetchData().then();
+    }, []);
 
     return (
         <ProForm
             title="上传事件"
             formRef={formRef}
+            submitter={{
+              render: (props, doms) => {
+                return [
+                  ...doms,
+                  <Button type="primary" danger>
+                    删除
+                  </Button>,
+                ];
+              },
+            }}
             onFinish={async (values) => {
+              console.log(values);
               const param = {
                 name: values.name,
                 code: values.code,
                 description: values.description,
-                files: values.files.map((v: any) => v.response.result)
+                visibility: values.visibility,
+                files: values.files ? values.files.map((v: any) => v.response.result) : []
               }
-              const result = await post('/api/p/case', param);
+
+              const result = await put(`/api/p/case/${id}`, param);
               console.log(result)
             }}
             validateMessages={{
               required: '此项为必填项',
             }}
             autoFocusFirstInput
+            request={async () => {
+              return await get(`/api/p/case/${id}`);
+            }}
         >
             <ProFormText
                 name="name"
@@ -91,15 +126,21 @@ function Write() {
             <ProFormUploadDragger
                 accept="image/*"
                 name="files"
-                label="事件附件"
+                label="新增附件"
                 action="/api/upload"
                 fieldProps={{
                   listType: 'picture-card'
                 }}
-                rules={[
-                  { required: true }
-                ]}
             />
+            <div style={{
+              marginBottom: '40px'
+            }}>
+              <Upload
+                  fileList={files}
+                  listType="picture"
+              />
+            </div>
+
         </ProForm>
     );
 }
