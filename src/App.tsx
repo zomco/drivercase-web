@@ -10,10 +10,11 @@ import Terms from "./pages/Terms";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Write from "./pages/Write";
-import Profile from "./pages/Profile";
+import Setting from "./pages/Setting";
 import {AuthProvider} from "./hooks/useAuth";
 import Edit from "./pages/Edit";
 import Case from "./pages/Case";
+import Read from "./pages/Read";
 
 function App() {
   return (
@@ -31,8 +32,9 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/write" element={<Write />} />
             <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/read/:id" element={<Read />} />
             <Route path="/case/:id" element={<Case />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/setting" element={<Setting />} />
           </Route>
         </Routes>
       </AuthProvider>

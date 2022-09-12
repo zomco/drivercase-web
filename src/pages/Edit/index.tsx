@@ -31,7 +31,7 @@ function Write() {
 
   return (
       <ProForm
-          title="上传事件"
+          title="修改事件"
           formRef={formRef}
           submitter={{
             render: (props, doms) => {
@@ -154,7 +154,6 @@ function Write() {
               }}
           />
         </div>
-
       </ProForm>
   );
 }

@@ -2,8 +2,9 @@ import React from "react";
 import {useAuth} from "../../hooks/useAuth";
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {CaseStatus} from "../../enums";
+import {Button} from "antd";
 
 const columns: ProColumns<CaseResult>[] = [
   {
@@ -20,28 +21,15 @@ const columns: ProColumns<CaseResult>[] = [
     valueType: 'textarea',
   },
   {
-    title: '隐私度',
-    dataIndex: 'visibility',
-    filters: true,
-    onFilter: true,
-    valueType: 'select',
-    valueEnum: {
-      PRIVATE: {text: '匿名', status: 'Default'},
-      PUBLIC: {text: '公开', status: 'Success'},
-      AUTHORIZE: {text: '联系', status: 'Processing'},
-    },
-  },
-  {
     title: '状态',
     dataIndex: 'status',
     filters: true,
     onFilter: true,
     valueType: 'select',
     valueEnum: {
-      WAITING: {text: '等待审核', status: 'Processing'},
-      COMMENT: {text: '审核意见', status: 'Error'},
-      TEMPLATE: {text: '审核描述', status: 'Default'},
-      APPROVED: {text: '审核通过', status: 'Success'},
+      UNCERTAIN: {text: '等待确认', status: 'Processing'},
+      CONFIRMED: {text: '确认联系', status: 'Error'},
+      REJECTED: {text: '拒绝联系', status: 'Default'},
     },
   },
   {
@@ -49,19 +37,20 @@ const columns: ProColumns<CaseResult>[] = [
     key: 'option',
     valueType: 'option',
     render: (text, record, index, action) => [
-      <Link key="contact" to={`/read/${record.id}`}>查看</Link>,
-      <Link key="edit" to={`/edit/${record.id}`}>修改</Link>,
+        <Button type="primary">确认</Button>,
+        <Button type="primary" danger>拒绝</Button>,
     ],
   },
 ];
 
-function Home() {
-  const {get} = useAuth();
+function Read() {
+  const {get, put} = useAuth();
+  const {id} = useParams();
 
   return (
       <ProTable
           request={async (params, sort, filter) => {
-            const result = await get('/api/p/case');
+            const result = await get(`/api/p/case/${id}/contact`);
             console.log(result);
             return {
               data: result,
@@ -75,9 +64,9 @@ function Home() {
           columns={columns}
           search={false}
           dateFormatter="string"
-          headerTitle="我的事件"
+          headerTitle="事件联系"
       />
   )
 }
 
-export default Home;
+export default Read;
