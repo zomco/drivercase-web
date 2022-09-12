@@ -8,29 +8,32 @@ import {
 } from '@ant-design/pro-components';
 import { useRef } from 'react';
 import {useAuth} from "../../hooks/useAuth";
-import {useParams} from "react-router-dom";
-import {UploadFile, Upload, Button} from "antd";
+import {useNavigate, useParams} from "react-router-dom";
+import {UploadFile, Upload, Button, message} from "antd";
 
 function Write() {
     const formRef = useRef<ProFormInstance>();
-    const { put, get } = useAuth();
+    const { put, get, del } = useAuth();
     const { id } = useParams();
     const [files, setFiles] = useState<UploadFile[]>([]);
+    const navigate = useNavigate();
+
     useEffect (() => {
       const fetchData = async () => {
-        const result = await get<string[]>(`/api/p/case/${id}/file`);
+        const result = await get<MediaFileResult[]>(`/api/p/case/${id}/file`);
         const fileResult = result?.map(value => ({
-          name: value,
-          url: `/api/file/4/${value}`,
+          uid: value.id,
+          name: value.name,
+          url: `/api/file/3/${value.name}`,
           crossOrigin: 'use-credentials',
           status: 'done'
         }));
-
         // @ts-ignore
         setFiles(fileResult);
       }
       fetchData().then();
     }, []);
+
 
     return (
         <ProForm
@@ -40,24 +43,31 @@ function Write() {
               render: (props, doms) => {
                 return [
                   ...doms,
-                  <Button type="primary" danger>
+                  <Button
+                      key="delete"
+                      type="primary"
+                      danger
+                      onClick={async () => {
+                        const result = await del<string>(`/api/p/case/${id}`);
+                        if (result) {
+                          navigate('/');
+                        }
+                      }}
+                  >
                     删除
                   </Button>,
                 ];
               },
             }}
             onFinish={async (values) => {
-              console.log(values);
               const param = {
-                name: values.name,
-                code: values.code,
-                description: values.description,
-                visibility: values.visibility,
+                ...values,
                 files: values.files ? values.files.map((v: any) => v.response.result) : []
               }
-
-              const result = await put(`/api/p/case/${id}`, param);
-              console.log(result)
+              const result = await put<CaseCreateParam, CaseResult>(`/api/p/case/${id}`, param);
+              if (result) {
+                navigate(0);
+              }
             }}
             validateMessages={{
               required: '此项为必填项',
@@ -137,7 +147,14 @@ function Write() {
             }}>
               <Upload
                   fileList={files}
+                  onChange={({ file, fileList}) => {
+                    setFiles([...fileList]);
+                  }}
                   listType="picture"
+                  onRemove={async (file) => {
+                    const result = await del<string>(`/api/p/case/${id}/file/${file.uid}`);
+                    return !!result;
+                  }}
               />
             </div>
 

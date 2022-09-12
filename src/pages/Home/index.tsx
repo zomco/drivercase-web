@@ -32,7 +32,7 @@ const columns: ProColumns<CaseResult>[] = [
         valueEnum: {
             PRIVATE: { text: '匿名', status: 'Default' },
             PUBLIC: { text: '公开', status: 'Success' },
-            AUTHORIZE: { text: '可联系', status: 'Warn' },
+            AUTHORIZE: { text: '联系', status: 'Processing' },
         },
     },
     {
@@ -53,8 +53,7 @@ const columns: ProColumns<CaseResult>[] = [
         key: 'option',
         valueType: 'option',
         render: (text, record, index, action) => [
-            <Link to={`/edit/${record.id}`}>修改</Link>,
-
+            <Link key="edit" to={`/edit/${record.id}`}>修改</Link>,
         ],
     },
 ];

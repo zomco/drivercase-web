@@ -87,7 +87,7 @@ function Signup() {
                                 placeholder="请输入名称"
                                 rules={[
                                     { required: true, whitespace: true },
-                                  { pattern: /^(?=[a-zA-Z0-9._]{5,10}$)(?!.*[_.]{2})[^_.].*[^_.]$/, message: '请输入符合规则的用户名' }
+                                  { pattern: /^(?=[a-zA-Z0-9._]{5,12}$)(?!.*[_.]{2})[^_.].*[^_.]$/, message: '请输入符合规则的用户名' }
                                 ]}
                             />
                             <ProFormText.Password

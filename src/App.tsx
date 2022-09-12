@@ -16,6 +16,7 @@ import Write from "./pages/Write";
 import Profile from "./pages/Profile";
 import {AuthProvider} from "./hooks/useAuth";
 import Edit from "./pages/Edit";
+import Case from "./pages/Case";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                   <Route path="/search" element={<Search />} />
                   <Route path="/write" element={<Write />} />
                   <Route path="/edit/:id" element={<Edit />} />
+                  <Route path="/case/:id" element={<Case />} />
                   <Route path="/profile" element={<Profile />} />
               </Route>
           </Routes>

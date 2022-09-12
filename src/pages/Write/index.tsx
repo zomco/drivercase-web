@@ -8,10 +8,13 @@ import {
 } from '@ant-design/pro-components';
 import { useRef } from 'react';
 import {useAuth} from "../../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
+import {message} from "antd";
 
 function Write() {
     const formRef = useRef<ProFormInstance>();
-    const { post, get } = useAuth();
+    const { post } = useAuth();
+    const navigate = useNavigate();
 
     return (
         <ProForm
@@ -19,13 +22,13 @@ function Write() {
             formRef={formRef}
             onFinish={async (values) => {
               const param = {
-                name: values.name,
-                code: values.code,
-                description: values.description,
+                ...values,
                 files: values.files.map((v: any) => v.response.result)
               }
-              const result = await post('/api/p/case', param);
-              console.log(result)
+              const result = await post<CaseCreateParam, string>('/api/p/case', param);
+              if (result) {
+                navigate('/');
+              }
             }}
             validateMessages={{
               required: '此项为必填项',

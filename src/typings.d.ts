@@ -134,3 +134,38 @@ type CaseResult = {
     status: CaseStatus,
     review: string,
 }
+
+/**
+ * Contact
+ */
+
+enum ContactStatus {
+    UNCERTAIN,
+    CONFIRMED,
+    REJECTED,
+}
+
+type ContactResult = {
+    id: string,
+    userId: string,
+    caseId: string,
+    status: ContactStatus,
+}
+
+/**
+ * MediaFile
+ */
+
+enum MediaFileSource {
+    USER_COMPANY,
+    USER_OPERATOR,
+    USER_REPRESENTATIVE,
+    CASE,
+}
+
+type MediaFileResult = {
+    id: string,
+    sourceId: string,
+    source: MediaFileSource,
+    name: string,
+}
