@@ -1,13 +1,13 @@
 import React, {createContext, useContext, useMemo} from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "./useLocalStorage";
+import {useNavigate} from "react-router-dom";
+import {useLocalStorage} from "./useLocalStorage";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {message} from "antd";
 
 
 const AuthContext = createContext<AuthContextType>(undefined!);
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [user, setUser] = useLocalStorage("user", null);
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // 登出
   const logout = () => {
     setUser(null);
-    navigate("/login", { replace: true });
+    navigate("/login", {replace: true});
   };
 
   const errHandler = async <P = any, R = any>(e: any) => {
@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         break;
       }
       case 401: {
-        navigate("/login", { replace: true });
+        navigate("/login", {replace: true});
         break;
       }
       default:
@@ -42,46 +42,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-  const post = async <P = any, R = any>(endpoint: string, param: P) =>{
+  const post = async <P = any, R = any>(endpoint: string, param: P) => {
     try {
       const response: AxiosResponse<ResultData<R>, P> = await axios.post(
           endpoint,
           param,
-          { headers: { Authorization: `Bearer ${user.accessToken}`}});
+          {headers: {Authorization: `Bearer ${user.accessToken}`}});
       return response.data.result;
     } catch (e) {
       await errHandler(e);
     }
   };
 
-  const get = async <P = any, R = any>(endpoint: string) =>{
+  const get = async <P = any, R = any>(endpoint: string) => {
     try {
       const response: AxiosResponse<ResultData<R>, P> = await axios.get(
           endpoint,
-          { headers: { Authorization: `Bearer ${user.accessToken}`}});
+          {headers: {Authorization: `Bearer ${user.accessToken}`}});
       return response.data.result;
     } catch (e) {
       await errHandler(e);
     }
   };
 
-  const put = async <P = any, R = any>(endpoint: string, param: P) =>{
+  const put = async <P = any, R = any>(endpoint: string, param: P) => {
     try {
       const response: AxiosResponse<ResultData<R>, P> = await axios.put(
           endpoint,
           param,
-          { headers: { Authorization: `Bearer ${user.accessToken}`}});
+          {headers: {Authorization: `Bearer ${user.accessToken}`}});
       return response.data.result;
     } catch (e) {
       await errHandler(e);
     }
   };
 
-  const del = async <P = any, R = any>(endpoint: string) =>{
+  const del = async <P = any, R = any>(endpoint: string) => {
     try {
       const response: AxiosResponse<ResultData<R>, P> = await axios.delete(
           endpoint,
-          { headers: { Authorization: `Bearer ${user.accessToken}`}});
+          {headers: {Authorization: `Bearer ${user.accessToken}`}});
       return response.data.result;
     } catch (e) {
       await errHandler(e);
@@ -89,16 +89,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const value = useMemo<AuthContextType>(
-    () => ({
-      user,
-      login,
-      logout,
-      post,
-      put,
-      get,
-      del,
-    }),
-    [user]
+      () => ({
+        user,
+        login,
+        logout,
+        post,
+        put,
+        get,
+        del,
+      }),
+      [user]
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

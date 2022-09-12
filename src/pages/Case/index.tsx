@@ -1,88 +1,122 @@
-import React from "react";
-import { ProDescriptions, ProDescriptionsActionType } from '@ant-design/pro-components';
-import { useRef } from 'react';
+import React, {useEffect, useRef, useState} from "react";
+import {ProDescriptions, ProDescriptionsActionType} from '@ant-design/pro-components';
 import {useAuth} from "../../hooks/useAuth";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {Button, Image, Tag, UploadFile} from 'antd';
+import {CaseVisibility, ContactStatus} from "../../enums";
 
 function Case() {
   const actionRef = useRef<ProDescriptionsActionType>();
-  const { get } = useAuth();
-  const { id } = useParams();
+  const {get, post} = useAuth();
+  const {id} = useParams();
+  const navigate = useNavigate();
 
   return (
-      <ProDescriptions
-          actionRef={actionRef}
-          title="事件信息"
-          dataSource={{
-            id: '这是一段文本columns',
-            date: '20200809',
-            money: '1212100',
-            state: 'all',
-            state2: 'open',
-          }}
-          columns={[
-            {
-              title: '文本',
-              key: 'text',
-              dataIndex: 'id',
-              ellipsis: true,
-              copyable: true,
-            },
-            {
-              title: '状态',
-              key: 'state',
-              dataIndex: 'state',
-              valueType: 'select',
-              valueEnum: {
-                all: { text: '全部', status: 'Default' },
-                open: {
-                  text: '未解决',
-                  status: 'Error',
+        <ProDescriptions
+            actionRef={actionRef}
+            column={1}
+            title="事件信息"
+            request={async () => {
+              const caze = await get(`/api/s/case/${id}`);
+              const users = await get(`/api/s/case/${id}/user`);
+              const contacts = await get(`/api/s/case/${id}/contact`);
+              const files = await get<MediaFileResult[]>(`/api/s/case/${id}/file`);
+              return {
+                success: !!caze,
+                data: {
+                  ...caze,
+                  user: users[0],
+                  contact: contacts[0],
+                  files,
                 },
-                closed: {
-                  text: '已解决',
-                  status: 'Success',
+              };
+            }}
+            columns={[
+              {
+                title: '司机姓名',
+                key: 'name',
+                dataIndex: 'name',
+              },
+              {
+                title: '司机身份证号码',
+                key: 'code',
+                dataIndex: 'code',
+              },
+              {
+                title: '隐私度',
+                dataIndex: 'visibility',
+                valueType: 'select',
+                valueEnum: {
+                  PRIVATE: {text: '匿名', status: 'Default'},
+                  PUBLIC: {text: '公开', status: 'Success'},
+                  AUTHORIZE: {text: '可联系', status: 'Processing'},
                 },
               },
-            },
-            {
-              title: '状态2',
-              key: 'state2',
-              dataIndex: 'state2',
-            },
-            {
-              title: '时间',
-              key: 'date',
-              dataIndex: 'date',
-              valueType: 'date',
-            },
-            {
-              title: 'money',
-              key: 'money',
-              dataIndex: 'money',
-              valueType: 'money',
-            },
-            {
-              title: '操作',
-              valueType: 'option',
-              render: () => [
-                <a target="_blank" rel="noopener noreferrer" key="link">
-                  链路
-                </a>,
-                <a target="_blank" rel="noopener noreferrer" key="warning">
-                  报警
-                </a>,
-                <a target="_blank" rel="noopener noreferrer" key="view">
-                  查看
-                </a>,
-              ],
-            },
-          ]}
-      >
-        <ProDescriptions.Item label="百分比" valueType="percent">
-          100
-        </ProDescriptions.Item>
-      </ProDescriptions>
+              {
+                title: '公司名称',
+                key: 'user.cpName',
+                dataIndex: ['user', 'cpName'],
+              },
+              {
+                title: '公司地址',
+                key: 'user.cpName',
+                dataIndex: ['user', 'cpLocation'],
+              },
+              {
+                title: '公司联系方式',
+                key: 'user.cpName',
+                dataIndex: ['user', 'cpMobile'],
+              },
+              {
+                title: '事件描述',
+                key: 'description',
+                dataIndex: 'description',
+              },
+              {
+                title: '操作',
+                key: 'contact.status',
+                valueType: 'option',
+                dataIndex: ['contact', 'status'],
+                render: (text, record, index, action) => record.visibility === CaseVisibility.AUTHORIZE ? [
+                  (text === ContactStatus.UNCERTAIN ? (<Tag color="processing">等待处理</Tag>) :
+                          text === ContactStatus.REJECTED ? (<Tag color="error">拒绝联系</Tag>) :
+                              text === ContactStatus.CONFIRMED ? (<Tag color="success">同意联系</Tag>) :
+                                  (<Button
+                                      type="primary"
+                                      onClick={async () => {
+                                        const result = await post(`/api/s/case/${id}/contact`, {});
+                                        if (result) {
+                                          navigate(0);
+                                        }
+                                      }}
+                                  >
+                                    请求联系
+                                  </Button>)
+                  )
+                ] : [],
+              },
+              {
+                title: '附件',
+                key: 'files',
+                dataIndex: 'files',
+                render: (text, record, index, action) => (
+                    <Image.PreviewGroup>
+                      {
+                        record.files.map((value: any) =>
+                            <Image
+                                width="25vw"
+                                src={`/api/file/3/${value.name}`}
+                                key={value.id}
+                                alt={value.name}
+                            />
+                        )
+                      }
+                    </Image.PreviewGroup>
+                ),
+              }
+            ]}
+        />
+
   );
 }
 

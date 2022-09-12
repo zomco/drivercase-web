@@ -1,0 +1,25 @@
+export enum CaseStatus {
+  WAITING = "WAITING",
+  COMMENT = "COMMENT",
+  TEMPLATE = "TEMPLATE",
+  APPROVED = "APPROVED",
+}
+
+export enum ContactStatus {
+  UNCERTAIN = "UNCERTAIN",
+  CONFIRMED = "CONFIRMED",
+  REJECTED = "REJECTED",
+}
+
+export enum MediaFileSource {
+  USER_COMPANY = "USER_COMPANY",
+  USER_OPERATOR = "USER_OPERATOR",
+  USER_REPRESENTATIVE = "USER_REPRESENTATIVE",
+  CASE = "CASE",
+}
+
+export enum CaseVisibility {
+  PRIVATE = "PRIVATE",
+  PUBLIC = "PUBLIC",
+  AUTHORIZE = "AUTHORIZE",
+}

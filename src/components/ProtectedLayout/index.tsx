@@ -1,18 +1,18 @@
-import { Navigate, Outlet, Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
-import { Breadcrumb, Layout, Menu } from 'antd';
-import React, { useState } from 'react';
-import {PageContainer} from "@ant-design/pro-components";
-import {ProCard} from "@ant-design/pro-components";
-const { Header, Content, Footer } = Layout;
+import {Navigate, Outlet} from "react-router-dom";
+import {useAuth} from "../../hooks/useAuth";
+import {Layout, Menu} from 'antd';
+import React from 'react';
+import {PageContainer, ProCard} from "@ant-design/pro-components";
+
+const {Header, Content, Footer} = Layout;
 
 
 function ProtectedLayout() {
 
-    const { user } = useAuth();
-    if (!user) {
-        return <Navigate to="/login" />;
-    }
+  const {user} = useAuth();
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
   return (
       <Layout
@@ -54,7 +54,7 @@ function ProtectedLayout() {
           </PageContainer>
         </Content>
       </Layout>
-    );
+  );
 };
 
 export default ProtectedLayout;

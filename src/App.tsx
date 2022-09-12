@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Routes,
-  Route
-} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import './App.css';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -21,23 +18,23 @@ import Case from "./pages/Case";
 function App() {
   return (
       <AuthProvider>
-          <Routes>
-              <Route element={<PublicLayout />}>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/privacy" element={<Privacy />} />
-                  <Route path="/terms" element={<Terms />} />
-              </Route>
+        <Routes>
+          <Route element={<PublicLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+          </Route>
 
-              <Route element={<ProtectedLayout />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/search" element={<Search />} />
-                  <Route path="/write" element={<Write />} />
-                  <Route path="/edit/:id" element={<Edit />} />
-                  <Route path="/case/:id" element={<Case />} />
-                  <Route path="/profile" element={<Profile />} />
-              </Route>
-          </Routes>
+          <Route element={<ProtectedLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/write" element={<Write />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/case/:id" element={<Case />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
       </AuthProvider>
   );
 }
