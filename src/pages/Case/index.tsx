@@ -18,17 +18,10 @@ function Case() {
             title="事件信息"
             request={async () => {
               const caze = await get(`/api/s/case/${id}`);
-              const users = await get(`/api/s/case/${id}/user`);
-              const contacts = await get(`/api/s/case/${id}/contact`);
-              const files = await get<MediaFileResult[]>(`/api/s/case/${id}/file`);
+              console.log(caze);
               return {
                 success: !!caze,
-                data: {
-                  ...caze,
-                  user: users[0],
-                  contact: contacts[0],
-                  files,
-                },
+                data: caze,
               };
             }}
             columns={[

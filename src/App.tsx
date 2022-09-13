@@ -14,7 +14,7 @@ import Setting from "./pages/Setting";
 import {AuthProvider} from "./hooks/useAuth";
 import Edit from "./pages/Edit";
 import Case from "./pages/Case";
-import Read from "./pages/Read";
+import Notfound from "./pages/Notfound";
 
 function App() {
   return (
@@ -32,10 +32,11 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/write" element={<Write />} />
             <Route path="/edit/:id" element={<Edit />} />
-            <Route path="/read/:id" element={<Read />} />
             <Route path="/case/:id" element={<Case />} />
             <Route path="/setting" element={<Setting />} />
           </Route>
+
+          <Route path="/*" element={<Notfound />} />
         </Routes>
       </AuthProvider>
   );

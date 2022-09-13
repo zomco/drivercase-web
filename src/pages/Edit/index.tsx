@@ -3,14 +3,18 @@ import type {ProFormInstance} from '@ant-design/pro-components';
 import {ProForm, ProFormRadio, ProFormText, ProFormTextArea, ProFormUploadDragger} from '@ant-design/pro-components';
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, Upload, UploadFile} from "antd";
+import {Button, Result, Upload, UploadFile} from "antd";
+import {CaseStatus} from "../../enums";
 
 function Write() {
   const formRef = useRef<ProFormInstance>();
   const {put, get, del} = useAuth();
   const {id} = useParams();
-  const [files, setFiles] = useState<UploadFile[]>([]);
+  const [deleted, setDeleted] = useState<boolean>(false);
+  const [updated, setUpdated] = useState<boolean>(false);
   const navigate = useNavigate();
+  const status = formRef?.current?.getFieldValue('status');
+  const [files, setFiles] = useState<UploadFile[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +34,24 @@ function Write() {
 
 
   return (
+      deleted ?
+      <Result
+          status="success"
+          title="删除事件信息成功"
+          subTitle=""
+          extra={[
+            <Button key="home" type="primary" onClick={() => navigate('/')}>查看我的事件</Button>,
+          ]}
+      /> :
+          updated ?
+              <Result
+                  status="success"
+                  title="修改事件信息成功"
+                  subTitle="管理员会花一些时间审核事件信息，请稍候"
+                  extra={[
+                    <Button key="home" type="primary" onClick={() => navigate('/')}>查看我的事件</Button>,
+                  ]}
+              /> :
       <ProForm
           title="修改事件"
           formRef={formRef}
@@ -44,7 +66,7 @@ function Write() {
                     onClick={async () => {
                       const result = await del<string>(`/api/p/case/${id}`);
                       if (result) {
-                        navigate('/');
+                        setDeleted(true);
                       }
                     }}
                 >
@@ -60,7 +82,7 @@ function Write() {
             }
             const result = await put<CaseCreateParam, CaseResult>(`/api/p/case/${id}`, param);
             if (result) {
-              navigate(0);
+              setUpdated(true);
             }
           }}
           validateMessages={{
@@ -96,6 +118,26 @@ function Write() {
               }
             ]}
         />
+        {
+          status === CaseStatus.TEMPLATE ?
+              <ProFormTextArea
+                  name="review"
+                  label="修改后的事件描述"
+                  width="md"
+                  tooltip="确保事件描述与此一致，不修改其他事件信息，提交后事件可以直接发布"
+                  placeholder=""
+                  disabled
+              /> :
+            status === CaseStatus.TEMPLATE ?
+                <ProFormTextArea
+                    name="review"
+                    label="修改意见"
+                    width="md"
+                    tooltip="根据修改意见修改事件描述"
+                    placeholder=""
+                    disabled
+                /> : <div></div>
+        }
         <ProFormTextArea
             name="description"
             label="事件描述"

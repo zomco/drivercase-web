@@ -1,27 +1,37 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import type {ProFormInstance} from '@ant-design/pro-components';
 import {ProForm, ProFormRadio, ProFormText, ProFormTextArea, ProFormUploadDragger,} from '@ant-design/pro-components';
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
+import {Button, Result} from "antd";
 
 function Write() {
   const formRef = useRef<ProFormInstance>();
   const {post} = useAuth();
   const navigate = useNavigate();
+  const [id, setId] = useState<string|undefined>(undefined);
 
   return (
+      !!id ?
+      <Result
+          status="success"
+          title="提交事件信息成功"
+          subTitle="管理员会花一些时间审核事件信息，审核期间可修改，请稍候"
+          extra={[
+            <Button key="edit" type="primary" onClick={() => navigate(`/edit/${id}`)}>前往修改</Button>,
+            <Button key="home" type="primary" onClick={() => navigate('/')}>查看我的事件</Button>,
+          ]}
+      /> :
       <ProForm
           title="上传事件"
           formRef={formRef}
           onFinish={async (values) => {
             const param = {
               ...values,
-              files: values.files.map((v: any) => v.response.result)
+              files: values.files ? values.files.map((v: any) => v.response.result) : [],
             }
             const result = await post<CaseCreateParam, string>('/api/p/case', param);
-            if (result) {
-              navigate('/');
-            }
+            setId(result);
           }}
           validateMessages={{
             required: '此项为必填项',
@@ -95,9 +105,6 @@ function Write() {
             fieldProps={{
               listType: 'picture-card'
             }}
-            rules={[
-              {required: true}
-            ]}
         />
       </ProForm>
   );

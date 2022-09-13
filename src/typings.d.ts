@@ -132,6 +132,8 @@ type ContactResult = {
   userId: string,
   caseId: string,
   status: ContactStatus,
+  user?: UserResult,
+  caze?: CaseResult,
 }
 
 /**

@@ -1,19 +1,35 @@
 import React, {useRef} from "react";
 import {ProFormText, ProForm, ProFormInstance} from "@ant-design/pro-components";
 import {useAuth} from "../../hooks/useAuth";
-import {message} from "antd";
+import {Button, message} from "antd";
 
 function Setting() {
   const formRef = useRef<ProFormInstance>();
-  const { user, put } = useAuth();
+  const { user, put, logout } = useAuth();
   return (
       <ProForm
           title="修改密码"
           formRef={formRef}
           onFinish={async (values) => {
             const result = await put('/api/c/password', values);
-            console.log(result);
-            message.success('更新成功');
+            if (result) {
+              message.success('更新成功');
+            }
+          }}
+          submitter={{
+            render: (props, doms) => {
+              return [
+                ...doms,
+                <Button
+                    key="logout"
+                    type="primary"
+                    danger
+                    onClick={() => logout()}
+                >
+                  退出登录
+                </Button>,
+              ];
+            },
           }}
           validateMessages={{
             required: '此项为必填项',
