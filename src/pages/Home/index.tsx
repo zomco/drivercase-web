@@ -2,9 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth";
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {Link} from "react-router-dom";
 import {CaseStatus, ContactStatus} from "../../enums";
-import {Modal, Button} from "antd";
+import {Button, Modal} from "antd";
 
 const columns: ProColumns<CaseResult>[] = [
   {
@@ -12,7 +11,7 @@ const columns: ProColumns<CaseResult>[] = [
     dataIndex: 'name',
     valueType: 'text',
     render: (text, record, index, action) => (record.status === CaseStatus.APPROVED ?
-        <Link to={`/case/${record.id}`}>{text}</Link> : text),
+        <a href={`/case/${record.id}`} target="_blank">{text}</a> : text),
   },
   {
     title: '身份证',
@@ -20,16 +19,10 @@ const columns: ProColumns<CaseResult>[] = [
     valueType: 'text'
   },
   {
-    title: '隐私度',
-    dataIndex: 'visibility',
-    filters: true,
-    onFilter: true,
-    valueType: 'select',
-    valueEnum: {
-      PRIVATE: {text: '匿名', status: 'Default'},
-      PUBLIC: {text: '公开', status: 'Success'},
-      AUTHORIZE: {text: '联系', status: 'Processing'},
-    },
+    title: '描述',
+    dataIndex: 'description',
+    valueType: 'text',
+    ellipsis: true
   },
   {
     title: '状态',
@@ -49,7 +42,7 @@ const columns: ProColumns<CaseResult>[] = [
     key: 'option',
     valueType: 'option',
     render: (text, record, index, action) => [
-      <Link key="edit" to={`/edit/${record.id}`}>修改</Link>,
+      <a key="edit" href={`/edit/${record.id}`} target="_blank">修改</a>,
     ],
   },
 ];
@@ -96,36 +89,41 @@ function Home() {
                     <Button
                         key="wait"
                         onClick={async () => {
-                          const result = await put(`/api/p/case/${contact.caze?.id}/contact/${contact.id}`, { status: ContactStatus.UNCERTAIN });
+                          const result = await put(`/api/p/case/${contact.caze?.id}/contact/${contact.id}`, {status: ContactStatus.UNCERTAIN});
                           if (result) {
                             contacts.shift();
                             setContacts([...contacts]);
-                          }}}
+                          }
+                        }}
                     >待定</Button>,
                     <Button
                         key="confirm"
                         type="primary"
                         onClick={async () => {
-                          const result = await put(`/api/p/case/${contact.caze?.id}/contact/${contact.id}`, { status: ContactStatus.CONFIRMED });
+                          const result = await put(`/api/p/case/${contact.caze?.id}/contact/${contact.id}`, {status: ContactStatus.CONFIRMED});
                           if (result) {
                             contacts.shift();
                             setContacts([...contacts]);
-                          }}}
+                          }
+                        }}
                     >确认</Button>,
                     <Button
                         key="reject"
                         type="primary"
                         danger
                         onClick={async () => {
-                          const result = await put(`/api/p/case/${contact.caze?.id}/contact/${contact.id}`, { status: ContactStatus.REJECTED });
+                          const result = await put(`/api/p/case/${contact.caze?.id}/contact/${contact.id}`, {status: ContactStatus.REJECTED});
                           if (result) {
                             contacts.shift();
                             setContacts([...contacts]);
-                          }}}
+                          }
+                        }}
                     >拒绝</Button>,
                   ]}
               >
-                <p><span style={{ fontWeight: "bold" }}>{contact.user?.cpName}</span> 请求获得您在事件 <Link style={{ fontWeight: "bold" }} to={`/case/${contact.caze?.id}`}>{contact.caze?.name}</Link> 中留下的联系方式 </p>
+                <p><span style={{fontWeight: "bold"}}>{contact.user?.cpName}</span> 请求获得您在事件 <a
+                    style={{fontWeight: "bold"}} href={`/case/${contact.caze?.id}`}>{contact.caze?.name}</a> 中留下的联系方式
+                </p>
               </Modal> :
               <div></div>
         }

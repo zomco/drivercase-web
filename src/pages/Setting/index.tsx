@@ -1,11 +1,11 @@
 import React, {useRef} from "react";
-import {ProFormText, ProForm, ProFormInstance} from "@ant-design/pro-components";
+import {ProForm, ProFormInstance, ProFormText} from "@ant-design/pro-components";
 import {useAuth} from "../../hooks/useAuth";
 import {Button, message} from "antd";
 
 function Setting() {
   const formRef = useRef<ProFormInstance>();
-  const { user, put, logout } = useAuth();
+  const {user, put, logout} = useAuth();
   return (
       <ProForm
           title="修改密码"

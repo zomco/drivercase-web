@@ -6,6 +6,6 @@ function PublicLayout() {
         <Outlet />
       </>
   )
-};
+}
 
 export default PublicLayout;

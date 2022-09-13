@@ -3,14 +3,7 @@ import {useAuth} from "../../hooks/useAuth";
 import logo from "./logo.png";
 import React from 'react';
 import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
-import {
-  GithubFilled,
-  InfoCircleFilled,
-  PlusCircleFilled,
-  QuestionCircleFilled,
-  SearchOutlined,
-    SmileFilled,
-} from '@ant-design/icons';
+import {SettingFilled, SmileFilled,} from '@ant-design/icons';
 
 
 function ProtectedLayout() {
@@ -31,7 +24,7 @@ function ProtectedLayout() {
             layout="top"
             splitMenus
             logo={logo}
-            title=""
+            title={user.cpName}
             route={{
               path: '/',
               routes: [
@@ -49,23 +42,20 @@ function ProtectedLayout() {
                   path: '/write',
                   name: '上传事件',
                   icon: <SmileFilled />
+                },
+                {
+                  path: '/setting',
+                  name: '设置',
+                  hideInMenu: true
                 }
               ]
             }}
-            menuItemRender={(item, dom) => (
-                <div
-                    onClick={() => {
-                      navigate(item.path || '/');
-                    }}
-                >
-                  {dom}
-                </div>
-            )}
-            avatarProps={{
-              src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-              size: 'small',
-              title: <div onClick={() => navigate('/setting')}>{user.username}</div>,
+            actionsRender={(props) => {
+              return [
+                <SettingFilled key="QuestionCircleFilled" onClick={() => navigate('/setting')} />,
+              ];
             }}
+            menuItemRender={(item, dom) => <div onClick={() => navigate(item.path || '/')}>{dom}</div>}
         >
           <PageContainer>
             <ProCard>
@@ -75,6 +65,6 @@ function ProtectedLayout() {
         </ProLayout>
       </div>
   );
-};
+}
 
 export default ProtectedLayout;

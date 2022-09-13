@@ -8,7 +8,7 @@ import {
   ProFormUploadDragger,
   StepsForm,
 } from '@ant-design/pro-components';
-import {message, Button, Result} from 'antd';
+import {Button, message, Result} from 'antd';
 import React, {useRef, useState} from 'react';
 import level from './level.json';
 import axios, {AxiosError} from "axios";
@@ -60,7 +60,7 @@ function Signup() {
                       }}
                       onFinish={async () => {
                         const values = formRef.current?.getFieldsValue();
-                        const { privacy, terms } = values;
+                        const {privacy, terms} = values;
                         if (!privacy || !terms) {
                           return false;
                         }
@@ -79,7 +79,10 @@ function Signup() {
                         placeholder="请输入名称"
                         rules={[
                           {required: true, whitespace: true},
-                          {pattern: /^(?=[a-zA-Z0-9._]{5,12}$)(?!.*[_.]{2})[^_.].*[^_.]$/, message: '请输入符合规则的用户名'}
+                          {
+                            pattern: /^(?=[a-zA-Z0-9._]{5,12}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+                            message: '请输入符合规则的用户名'
+                          }
                         ]}
                     />
                     <ProFormText.Password

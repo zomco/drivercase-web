@@ -21,6 +21,7 @@ interface AuthProviderProps {
 type AuthUser = {
   accessToken: string,
   username: string,
+  cpName: string,
 }
 
 type AuthContextType = {
@@ -51,6 +52,7 @@ type LoginParam = {
 type LoginResult = {
   accessToken: string,
   username: string,
+  cpName: string,
 }
 
 /**

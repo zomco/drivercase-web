@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PublicLayout from "./components/PublicLayout";
 import ProtectedLayout from "./components/ProtectedLayout";
+import ProtectedPageLayout from "./components/ProtectedPageLayout";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Home from "./pages/Home";
@@ -31,9 +32,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/write" element={<Write />} />
+            <Route path="/setting" element={<Setting />} />
+          </Route>
+
+          <Route element={<ProtectedPageLayout />}>
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="/case/:id" element={<Case />} />
-            <Route path="/setting" element={<Setting />} />
           </Route>
 
           <Route path="/*" element={<Notfound />} />
