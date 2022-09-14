@@ -46,47 +46,9 @@ function Case() {
               },
             },
             {
-              title: '公司名称',
-              key: 'user.cpName',
-              dataIndex: ['user', 'cpName'],
-            },
-            {
-              title: '公司地址',
-              key: 'user.cpName',
-              dataIndex: ['user', 'cpLocation'],
-            },
-            {
-              title: '公司联系方式',
-              key: 'user.cpName',
-              dataIndex: ['user', 'cpMobile'],
-            },
-            {
               title: '事件描述',
               key: 'description',
               dataIndex: 'description',
-            },
-            {
-              title: '操作',
-              key: 'contact.status',
-              valueType: 'option',
-              dataIndex: ['contact', 'status'],
-              render: (text, record, index, action) => record.visibility === CaseVisibility.AUTHORIZE ? [
-                (text === ContactStatus.UNCERTAIN ? (<Tag color="processing">等待处理</Tag>) :
-                        text === ContactStatus.REJECTED ? (<Tag color="error">拒绝联系</Tag>) :
-                            text === ContactStatus.CONFIRMED ? (<Tag color="success">同意联系</Tag>) :
-                                (<Button
-                                    type="primary"
-                                    onClick={async () => {
-                                      const result = await post(`/api/s/case/${id}/contact`, {});
-                                      if (result) {
-                                        navigate(0);
-                                      }
-                                    }}
-                                >
-                                  请求联系
-                                </Button>)
-                )
-              ] : [],
             },
             {
               title: '附件',

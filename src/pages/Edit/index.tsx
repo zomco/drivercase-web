@@ -10,7 +10,6 @@ function Write() {
   const formRef = useRef<ProFormInstance>();
   const {put, get, del} = useAuth();
   const {id} = useParams();
-  const [deleted, setDeleted] = useState<boolean>(false);
   const [updated, setUpdated] = useState<boolean>(false);
   const navigate = useNavigate();
   const status = formRef?.current?.getFieldValue('status');
@@ -34,15 +33,6 @@ function Write() {
 
 
   return (
-      deleted ?
-          <Result
-              status="success"
-              title="删除事件信息成功"
-              subTitle=""
-              extra={[
-                <Button key="home" type="primary" onClick={() => navigate('/')}>查看我的事件</Button>,
-              ]}
-          /> :
           updated ?
               <Result
                   status="success"
@@ -55,26 +45,6 @@ function Write() {
               <ProForm
                   title="修改事件"
                   formRef={formRef}
-                  submitter={{
-                    render: (props, doms) => {
-                      return [
-                        ...doms,
-                        <Button
-                            key="delete"
-                            type="primary"
-                            danger
-                            onClick={async () => {
-                              const result = await del<string>(`/api/p/case/${id}`);
-                              if (result) {
-                                setDeleted(true);
-                              }
-                            }}
-                        >
-                          删除
-                        </Button>,
-                      ];
-                    },
-                  }}
                   onFinish={async (values) => {
                     const param = {
                       ...values,

@@ -4,51 +4,11 @@ import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {CaseStatus, ContactStatus} from "../../enums";
 import {Button, Modal} from "antd";
-
-const columns: ProColumns<CaseResult>[] = [
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    valueType: 'text',
-    render: (text, record, index, action) => (record.status === CaseStatus.APPROVED ?
-        <a href={`/case/${record.id}`} target="_blank">{text}</a> : text),
-  },
-  {
-    title: '身份证',
-    dataIndex: 'code',
-    valueType: 'text'
-  },
-  {
-    title: '描述',
-    dataIndex: 'description',
-    valueType: 'text',
-    ellipsis: true
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    filters: true,
-    onFilter: true,
-    valueType: 'select',
-    valueEnum: {
-      WAITING: {text: '等待审核', status: 'Processing'},
-      COMMENT: {text: '审核意见', status: 'Error'},
-      TEMPLATE: {text: '审核描述', status: 'Default'},
-      APPROVED: {text: '审核通过', status: 'Success'},
-    },
-  },
-  {
-    title: '操作',
-    key: 'option',
-    valueType: 'option',
-    render: (text, record, index, action) => [
-      <a key="edit" href={`/edit/${record.id}`} target="_blank">修改</a>,
-    ],
-  },
-];
+import {useNavigate} from "react-router-dom";
 
 function Home() {
-  const {get, put} = useAuth();
+  const {get, put, del} = useAuth();
+  const navigate = useNavigate();
   const [contacts, setContacts] = useState<ContactResult[]>([]);
   const contact = contacts[0];
   useEffect(() => {
@@ -84,7 +44,50 @@ function Home() {
             pagination={{
               showQuickJumper: true,
             }}
-            columns={columns}
+            columns={[
+              {
+                title: '描述',
+                dataIndex: 'name',
+                valueType: 'text',
+                render: (text, record, index, action) => {
+                  return `${record.name}，${record.code}，${record.description}。`
+                },
+              },
+              {
+                title: '状态',
+                dataIndex: 'status',
+                filters: true,
+                onFilter: true,
+                valueType: 'select',
+                width: '100px',
+                valueEnum: {
+                  WAITING: {text: '等待审核', status: 'Processing'},
+                  COMMENT: {text: '请修改', status: 'Error'},
+                  TEMPLATE: {text: '请修改', status: 'Default'},
+                  APPROVED: {text: '已发布', status: 'Success'},
+                },
+              },
+              {
+                title: '操作',
+                key: 'option',
+                valueType: 'option',
+                width: '140px',
+                render: (text, record, index, action) => [
+                  <a key="edit" href={`/edit/${record.id}`} target="_blank">修改</a>,
+                  <Button
+                      key="delete"
+                      type="primary"
+                      danger
+                      onClick={async () => {
+                        const result = await del<string>(`/api/p/case/${record.id}`);
+                        if (result) {
+                          navigate(0);
+                        }
+                      }}
+                  >撤回</Button>,
+                ],
+              },
+            ]}
             search={false}
             dateFormatter="string"
             headerTitle="我的事件"

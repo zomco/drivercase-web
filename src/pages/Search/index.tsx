@@ -2,7 +2,7 @@ import React from "react";
 import {ProList} from '@ant-design/pro-components';
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth";
-import {message, Tag} from 'antd';
+import {message, Tag, Button} from 'antd';
 import {ContactStatus} from "../../enums";
 
 const validateDriver = (fields: any) => {
@@ -69,7 +69,8 @@ const validateDriver = (fields: any) => {
 }
 
 function Search() {
-  const {get} = useAuth();
+  const {get, post} = useAuth();
+  const navigate = useNavigate();
 
   return (
       <ProList
@@ -106,37 +107,43 @@ function Search() {
             title: {
               dataIndex: 'name',
               title: '司机姓名',
-              render: (text, row) => <a href={`/case/${row.id}`} target="_blank">{text}</a>
-            },
-            description: {
-              dataIndex: 'description',
-              title: '事件描述',
-              search: false,
-            },
-            content: {
               render: (text, row) => {
-                const contact = row.contact;
-                if (!contact) {
-                  return <div></div>
+                let padding = `对方公司 ${row.user.cpMobile}`;
+                if (row.contact) {
+                  switch (row.contact.status) {
+                    case ContactStatus.UNCERTAIN:
+                      padding = '等待对方公司回应';
+                      break;
+                    case ContactStatus.CONFIRMED:
+                      padding = `对方公司 ${row.user.cpMobile}`;
+                      break;
+                    case ContactStatus.REJECTED:
+                      padding = '等待对方公司回应';
+                      break;
+                  }
                 }
-                return (
-                    <div>
-                      {
-                        contact.status === ContactStatus.UNCERTAIN ?
-                            <Tag color="processing">等待处理</Tag> :
-                            contact.status === ContactStatus.REJECTED ?
-                                <Tag color="error">拒绝联系</Tag> :
-                                contact.status === ContactStatus.CONFIRMED ?
-                                    <Tag color="success">确认联系</Tag> : <Tag color="warning">未知</Tag>
-                      }
-
-                    </div>
-                )
-
-              },
-              search: false
+                return `据 ${row.user.cpName} 描述所知，${row.name}，${row.code}，${row.description}。${padding}`
+              }
             },
-            subTitle: {
+            actions: {
+              render: (text, row) => {
+                return [
+                  !row.contact ?
+                      <Button
+                          key="contact"
+                          type="primary"
+                          onClick={async () => {
+                            const result = await post(`/api/s/case/${row.id}/contact`, {});
+                            if (result) {
+                              navigate(0);
+                            }
+                          }}
+                      >获取该公司联系方式</Button> : null,
+                  !!row.files.length ? <a key="detail" href={`/case/${row.id}`} target="_blank">附件</a> : null,
+                ]
+              }
+            },
+            code: {
               dataIndex: 'code',
               title: '司机身份证',
             },
