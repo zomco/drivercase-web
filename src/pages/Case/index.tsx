@@ -16,9 +16,9 @@ function Case() {
           actionRef={actionRef}
           column={1}
           title="事件信息"
-          request={async () => {
+          request={async (params) => {
+            console.log(params);
             const caze = await get(`/api/s/case/${id}`);
-            console.log(caze);
             return {
               success: !!caze,
               data: caze,

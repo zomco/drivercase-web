@@ -89,7 +89,8 @@ function Write() {
                     required: '此项为必填项',
                   }}
                   autoFocusFirstInput
-                  request={async () => {
+                  request={async (params, props) => {
+                    console.log(params, props);
                     return await get(`/api/p/case/${id}`);
                   }}
               >

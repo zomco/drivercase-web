@@ -64,11 +64,20 @@ function Home() {
   return (
       <>
         <ProTable
-            request={async (params, sort, filter) => {
-              const result = await get('/api/p/case');
-              return {
-                data: result,
-                success: !!result,
+            request={async ({current, pageSize, ...fields}, sort, filter) => {
+              console.log(current, pageSize, fields, sort, filter);
+              const padding = !!Object.keys(fields).length ? `&${Object.keys(fields).map(key => `${key}=${fields[key]}`).join('&')}`: '';
+              const result = await get(`/api/p/case?page=${current ? current - 1 : 0}&size=${pageSize}${padding}`);
+              if (!!result) {
+                return {
+                  success: true,
+                  data: result.content,
+                  total: result.totalElements
+                };
+              } else {
+                return {
+                  success: false,
+                };
               }
             }}
             rowKey="id"
