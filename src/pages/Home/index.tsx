@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth";
-import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {CaseStatus, ContactStatus} from "../../enums";
 import {Button, Modal} from "antd";

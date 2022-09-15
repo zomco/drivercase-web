@@ -1,10 +1,11 @@
 import {LockOutlined, MobileOutlined, UserOutlined,} from '@ant-design/icons';
-import {LoginFormPage, ProFormCaptcha, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
+import {LoginForm, ProFormCaptcha, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
 import {Button, Divider, message, Tabs} from 'antd';
 import {useState} from 'react';
 import logo from './logo.png';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import {useAuth} from "../../hooks/useAuth";
+import {USERNAME_REGEXP, PASSWORD_REGEXP} from "../../utils/string";
 
 type LoginType = 'phone' | 'account';
 
@@ -12,12 +13,15 @@ function Login() {
   const [loginType, setLoginType] = useState<LoginType>('account');
   const {login} = useAuth();
   return (
-      <div style={{backgroundColor: 'white', height: 'calc(100vh - 48px)'}}>
-        <LoginFormPage
-            backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
+      <div style={{
+        backgroundImage: 'url(https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png)',
+        height: 'calc(100vh - 48px)',
+        paddingTop: '10vh',
+      }}>
+        <LoginForm
             logo={logo}
             title="行者平台"
-            subTitle="货车司机打分评价平台"
+            subTitle="一个为运输企业降低风险的平台"
             onFinish={async (values: LoginParam) => {
               try {
                 const response: AxiosResponse<ResultData<LoginResult>, LoginParam> = await axios.post('/api/login', values);
@@ -80,7 +84,7 @@ function Login() {
                     rules={[
                       {required: true, whitespace: true},
                       {
-                        pattern: /^(?=[a-zA-Z0-9._]{5,10}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+                        pattern: USERNAME_REGEXP,
                         message: '请输入符合规则的用户名'
                       }
                     ]}
@@ -95,7 +99,7 @@ function Login() {
                     rules={[
                       {required: true, whitespace: true},
                       {
-                        pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                        pattern: PASSWORD_REGEXP,
                         message: '请输入符合规则的密码'
                       }
                     ]}
@@ -166,7 +170,7 @@ function Login() {
             {/*  忘记密码*/}
             {/*</a>*/}
           </div>
-        </LoginFormPage>
+        </LoginForm>
       </div>
   );
 }

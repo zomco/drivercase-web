@@ -13,6 +13,17 @@ import React, {useRef, useState} from 'react';
 import level from './level.json';
 import axios, {AxiosError} from "axios";
 import {Link, useNavigate} from "react-router-dom";
+import {
+  USERNAME_REGEXP,
+  PASSWORD_REGEXP,
+  COMPANY_NAME_REGEXP,
+  COMPANY_CODE_REGEXP,
+  MOBILE_REGEXP,
+  LANDLINE_REGEXP,
+  PHONE_NUMBER_REGEXP,
+    PERSON_NAME_REGEXP,
+    PERSON_CODE_REGEXP,
+} from "../../utils/string";
 
 
 function Signup() {
@@ -73,37 +84,34 @@ function Signup() {
                   >
                     <ProFormText
                         name="username"
-                        label="用户名"
+                        label="用户名（可以是由字母数字或下划线组成，长度为5到10位）"
                         width="md"
-                        tooltip="可以包含字母数字、下划线_和句号.，长度为5到10位"
                         placeholder="请输入名称"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^(?=[a-zA-Z0-9._]{5,12}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+                            pattern: USERNAME_REGEXP,
                             message: '请输入符合规则的用户名'
                           }
                         ]}
                     />
                     <ProFormText.Password
                         name="password"
-                        label="密码"
+                        label="密码（至少由字母和数字组成，长度为8到16位）"
                         width="md"
-                        tooltip="至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位"
                         placeholder="请输入密码"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                            pattern: PASSWORD_REGEXP,
                             message: '请输入符合规则的密码'
                           }
                         ]}
                     />
                     <ProFormText.Password
                         name="repeat"
-                        label="确认密码"
+                        label="确认密码（与输入密码一致）"
                         width="md"
-                        tooltip="至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位"
                         placeholder="请重复输入密码"
                         rules={[
                           {required: true, whitespace: true},
@@ -176,37 +184,31 @@ function Signup() {
                   >
                     <ProFormText
                         name="cpName"
-                        label="公司名称"
+                        label="公司名称（公司完整名称）"
                         width="md"
-                        tooltip="公司名称"
-                        placeholder="请输入公司名称"
                         rules={[
                           {required: true, whitespace: true},
-                          {pattern: /^[\u4e00-\u9fa5（）\da-zA-Z&]{2,50}$/gi, message: '请输入有效公司名称'}]}
+                          {pattern: COMPANY_NAME_REGEXP, message: '请输入有效公司名称'}]}
                     />
                     <ProFormText
                         name="cpCode"
-                        label="公司信用代码"
+                        label="公司信用代码（18位统一社会信用代码）"
                         width="md"
-                        tooltip="18位信用代码"
-                        placeholder="请输入公司信用代码"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^([0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}|[1-9]\d{14})$/,
+                            pattern: COMPANY_CODE_REGEXP,
                             message: '请输入有效统一社会信用代码'
                           }]}
                     />
                     <ProFormText
                         name="cpMobile"
-                        label="公司联系电话"
+                        label="公司联系电话（11位手机号码，或固话号码(格式如：0757-12345678)）"
                         width="md"
-                        tooltip="11位电话号码或者固话"
-                        placeholder="请输入公司联系电话"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}|\d{3}-\d{7,8}|\d{4}-\d{7,8}$/,
+                            pattern: PHONE_NUMBER_REGEXP,
                             message: '请输入有效号码'
                           }]}
                     />
@@ -247,7 +249,7 @@ function Signup() {
                           rpCode: values.rpCode,
                           rpMobile: values.rpMobile,
                           rpCaptcha: values.rpCaptcha,
-                          rpFiles: values.rpFiles.map((v: any) => v.response.result)
+                          rpFiles: [values.rpFiles1[0].response.result, values.rpFiles2[0].response.result]
                         }
                         console.log(values);
                         return true;
@@ -255,39 +257,36 @@ function Signup() {
                   >
                     <ProFormText
                         name="rpName"
-                        label="法人姓名"
+                        label="法人姓名（2到6个汉字）"
                         width="md"
-                        tooltip="法人姓名"
                         placeholder="请输入法人姓名"
                         rules={[
                           {required: true, whitespace: true},
-                          {pattern: /^[\u4E00-\u9FA5]{2,4}$/, message: '请输入有效姓名'}
+                          {pattern: PERSON_NAME_REGEXP, message: '请输入有效姓名'}
                         ]}
                     />
                     <ProFormText
                         name="rpCode"
-                        label="法人身份证号码"
+                        label="法人身份证号码（18位身份证号码）"
                         width="md"
-                        tooltip="18位身份证号码"
                         placeholder="请输入法人身份证号码"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+                            pattern: PERSON_CODE_REGEXP,
                             message: '请输入有效身份证号码'
                           }
                         ]}
                     />
                     <ProFormText
                         name="rpMobile"
-                        label="法人联系电话"
+                        label="法人联系电话（11位手机号码）"
                         width="md"
-                        tooltip="11位电话号码"
                         placeholder="请输入法人联系电话"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$/,
+                            pattern: MOBILE_REGEXP,
                             message: '请输入有效手机号码'
                           }
                         ]}
@@ -309,9 +308,22 @@ function Signup() {
                         }}
                     />
                     <ProFormUploadDragger
-                        max={2}
-                        name="rpFiles"
-                        label="身份证正反面"
+                        max={1}
+                        name="rpFiles1"
+                        label="身份证国徽面"
+                        accept="image/*"
+                        action="/api/upload"
+                        fieldProps={{
+                          listType: 'picture-card'
+                        }}
+                        rules={[
+                          {required: true}
+                        ]}
+                    />
+                    <ProFormUploadDragger
+                        max={1}
+                        name="rpFiles2"
+                        label="身份证人像面"
                         accept="image/*"
                         action="/api/upload"
                         fieldProps={{
@@ -335,7 +347,7 @@ function Signup() {
                           opCode: values.opCode,
                           opMobile: values.opMobile,
                           opCaptcha: values.opCaptcha,
-                          opFiles: values.opFiles.map((v: any) => v.response.result)
+                          opFiles: [values.opFiles1[0].response.result, values.opFiles2[0].response.result]
                         }
                         console.log(values);
                         try {
@@ -354,39 +366,36 @@ function Signup() {
                   >
                     <ProFormText
                         name="opName"
-                        label="操作人姓名"
+                        label="操作人姓名（2到6个汉字）"
                         width="md"
-                        tooltip="操作人姓名"
                         placeholder="请输入操作人姓名"
                         rules={[
                           {required: true, whitespace: true},
-                          {pattern: /^[\u4E00-\u9FA5]{2,4}$/, message: '请输入有效姓名'}
+                          {pattern: PERSON_NAME_REGEXP, message: '请输入有效姓名'}
                         ]}
                     />
                     <ProFormText
                         name="opCode"
-                        label="操作人身份证号码"
+                        label="操作人身份证号码（18位身份证号码）"
                         width="md"
-                        tooltip="最长为 12 位，唯一"
                         placeholder="请输入操作人身份证号码"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+                            pattern: PERSON_CODE_REGEXP,
                             message: '请输入有效身份证号码'
                           }
                         ]}
                     />
                     <ProFormText
                         name="opMobile"
-                        label="操作人联系电话"
+                        label="操作人联系电话（11位手机号码）"
                         width="md"
-                        tooltip="11位电话号码"
                         placeholder="请输入操作人联系电话"
                         rules={[
                           {required: true, whitespace: true},
                           {
-                            pattern: /^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[235-8]\d{2}|4(?:0\d|1[0-2]|9\d))|9[0-35-9]\d{2}|66\d{2})\d{6}$/,
+                            pattern: MOBILE_REGEXP,
                             message: '请输入有效手机号码'
                           }
                         ]}
@@ -408,9 +417,22 @@ function Signup() {
                         }}
                     />
                     <ProFormUploadDragger
-                        max={2}
-                        name="opFiles"
-                        label="身份证正反面"
+                        max={1}
+                        name="opFiles1"
+                        label="身份证国徽面"
+                        accept="image/*"
+                        action="/api/upload"
+                        fieldProps={{
+                          listType: 'picture-card'
+                        }}
+                        rules={[
+                          {required: true}
+                        ]}
+                    />
+                    <ProFormUploadDragger
+                        max={1}
+                        name="opFiles2"
+                        label="身份证人像面"
                         accept="image/*"
                         action="/api/upload"
                         fieldProps={{

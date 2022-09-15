@@ -5,10 +5,17 @@ export enum CaseStatus {
   APPROVED = "APPROVED",
 }
 
-export enum ContactStatus {
+export enum UserStatus {
   UNCERTAIN = "UNCERTAIN",
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
+
+export enum ContactStatus {
+  REGISTER = "REGISTER",
   CONFIRMED = "CONFIRMED",
   REJECTED = "REJECTED",
+  UNCERTAIN = "UNCERTAIN"
 }
 
 export enum MediaFileSource {

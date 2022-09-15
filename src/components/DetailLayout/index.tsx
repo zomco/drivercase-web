@@ -4,10 +4,14 @@ import React from 'react';
 import {PageContainer, ProCard} from "@ant-design/pro-components";
 
 
-function ProtectedPageLayout() {
+function DetailLayout() {
   const {user} = useAuth();
   if (!user) {
     return <Navigate to="/login" />;
+  }
+
+  if (user.cpName === '管理员') {
+    return <Navigate to="/admin-user" />;
   }
 
   return (
@@ -25,4 +29,4 @@ function ProtectedPageLayout() {
   );
 }
 
-export default ProtectedPageLayout;
+export default DetailLayout;

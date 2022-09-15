@@ -5,7 +5,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PublicLayout from "./components/PublicLayout";
 import ProtectedLayout from "./components/ProtectedLayout";
-import ProtectedPageLayout from "./components/ProtectedPageLayout";
+import ProtectedPageLayout from "./components/DetailLayout";
+import RestrictedLayout from "./components/RestrictedLayout";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Home from "./pages/Home";
@@ -16,6 +17,8 @@ import {AuthProvider} from "./hooks/useAuth";
 import Edit from "./pages/Edit";
 import Case from "./pages/Case";
 import Notfound from "./pages/Notfound";
+import AdminCase from "./pages/AdminCase";
+import AdminUser from "./pages/AdminUser";
 
 function App() {
   return (
@@ -30,6 +33,7 @@ function App() {
 
           <Route element={<ProtectedLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/write" element={<Write />} />
             <Route path="/setting" element={<Setting />} />
@@ -38,6 +42,11 @@ function App() {
           <Route element={<ProtectedPageLayout />}>
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="/case/:id" element={<Case />} />
+          </Route>
+
+          <Route element={<RestrictedLayout />}>
+            <Route path="/admin-user" element={<AdminUser />} />
+            <Route path="/admin-case" element={<AdminCase />} />
           </Route>
 
           <Route path="/*" element={<Notfound />} />

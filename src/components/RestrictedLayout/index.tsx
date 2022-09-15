@@ -6,15 +6,15 @@ import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
 import {SettingFilled, SmileFilled,} from '@ant-design/icons';
 
 
-function ProtectedLayout() {
+function RestrictedLayout() {
   const navigate = useNavigate();
   const {user} = useAuth();
   if (!user) {
     return <Navigate to="/login" />;
   }
 
-  if (user.cpName === '管理员') {
-    return <Navigate to="/admin-user" />;
+  if (user.cpName !== '管理员') {
+    return <Navigate to="/" />;
   }
 
   return (
@@ -33,25 +33,15 @@ function ProtectedLayout() {
               path: '/',
               routes: [
                 {
-                  path: '/',
-                  name: '我的事件',
+                  path: '/admin-user',
+                  name: '审核用户',
                   icon: <SmileFilled />
                 },
                 {
-                  path: '/search',
-                  name: '查询事件',
+                  path: '/admin-case',
+                  name: '审核事件',
                   icon: <SmileFilled />
                 },
-                {
-                  path: '/write',
-                  name: '上传事件',
-                  icon: <SmileFilled />
-                },
-                {
-                  path: '/setting',
-                  name: '设置',
-                  hideInMenu: true
-                }
               ]
             }}
             actionsRender={(props) => {
@@ -71,4 +61,4 @@ function ProtectedLayout() {
   );
 }
 
-export default ProtectedLayout;
+export default RestrictedLayout;

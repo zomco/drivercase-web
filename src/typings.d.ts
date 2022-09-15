@@ -96,12 +96,47 @@ type UserParam = {
   operator?: UserOperatorParam,
 }
 
+type UserReviewParam = {
+  status: UserStatus,
+}
+
+
+type UserResult = {
+  id: string,
+  cpLocation: string,
+  cpName: string,
+  cpCode: string,
+  cpMobile: string,
+
+  cases?: CaseResult[],
+  contacts?: ContactResult[],
+}
+
+type AdminUserResult = {
+  id: string,
+  name: string,
+  cpLocation: string,
+  cpName: string,
+  cpCode: string,
+  cpMobile: string,
+  rpName: string,
+  rpCode: string,
+  rpMobile: string,
+  opName: string,
+  opCode: string,
+  opMobile: string,
+
+  cpFiles?: MediaFileResult[],
+  rpFiles?: MediaFileResult[],
+  opFiles?: MediaFileResult[],
+}
+
 /**
  * Case
  */
 
 type CaseReviewParam = {
-  status: string,
+  status: CaseStatus,
   review: string,
 }
 
@@ -115,13 +150,25 @@ type CaseCreateParam = {
 
 type CaseResult = {
   id: string,
-  userId: string,
   name: string,
   code: string,
   description: string,
   visibility: CaseVisibility,
+
   status: CaseStatus,
-  review: string,
+  review?: string,
+  files?: MediaFileResult[],
+}
+
+type AdminCaseResult = {
+  id: string,
+  name: string,
+  code: string,
+  description: string,
+
+  status: CaseStatus,
+  review?: string,
+  files?: MediaFileResult[],
 }
 
 /**
@@ -131,9 +178,8 @@ type CaseResult = {
 
 type ContactResult = {
   id: string,
-  userId: string,
-  caseId: string,
   status: ContactStatus,
+
   user?: UserResult,
   caze?: CaseResult,
 }
@@ -145,7 +191,5 @@ type ContactResult = {
 
 type MediaFileResult = {
   id: string,
-  sourceId: string,
-  source: MediaFileSource,
   name: string,
 }
