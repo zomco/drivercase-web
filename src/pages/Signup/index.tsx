@@ -92,6 +92,15 @@ function Signup() {
                           {
                             pattern: USERNAME_REGEXP,
                             message: '请输入符合规则的用户名'
+                          },
+                          {
+                            validator: async (_, value) => {
+                              try {
+                                await axios.get(`/api/validate?username=${value}`);
+                              } catch (e) {
+                                throw new Error('用户已存在');
+                              }
+                            }
                           }
                         ]}
                     />

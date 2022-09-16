@@ -11,7 +11,7 @@ function DetailLayout() {
   }
 
   if (user.cpName === '管理员') {
-    return <Navigate to="/admin-user" />;
+    return <Navigate to="/admin/user" />;
   }
 
   return (

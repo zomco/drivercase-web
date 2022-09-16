@@ -6,7 +6,7 @@ import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
 import {SettingFilled, SmileFilled,} from '@ant-design/icons';
 
 
-function RestrictedLayout() {
+function AdminLayout() {
   const navigate = useNavigate();
   const {user} = useAuth();
   if (!user) {
@@ -33,21 +33,16 @@ function RestrictedLayout() {
               path: '/',
               routes: [
                 {
-                  path: '/admin-user',
-                  name: '审核用户',
+                  path: '/admin/user',
+                  name: '用户',
                   icon: <SmileFilled />
                 },
                 {
-                  path: '/admin-case',
-                  name: '审核事件',
+                  path: '/admin/case',
+                  name: '事件',
                   icon: <SmileFilled />
                 },
               ]
-            }}
-            actionsRender={(props) => {
-              return [
-                <SettingFilled key="QuestionCircleFilled" onClick={() => navigate('/setting')} />,
-              ];
             }}
             menuItemRender={(item, dom) => <div onClick={() => navigate(item.path || '/')}>{dom}</div>}
         >
@@ -61,4 +56,4 @@ function RestrictedLayout() {
   );
 }
 
-export default RestrictedLayout;
+export default AdminLayout;

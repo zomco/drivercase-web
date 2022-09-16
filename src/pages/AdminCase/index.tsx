@@ -73,7 +73,7 @@ function AdminCase() {
         {!!caze ?
             <ProDescriptions.Item label="文本" valueType="option">
               <ModalForm<{ review: string; }>
-                  trigger={<Button type="primary">修改意见</Button>}
+                  trigger={<Button>修改意见</Button>}
                   title="修改意见"
                   autoFocusFirstInput
                   modalProps={{
@@ -101,7 +101,7 @@ function AdminCase() {
                 />
               </ModalForm>
               <ModalForm<{ review: string; }>
-                  trigger={<Button type="primary">修改描述</Button>}
+                  trigger={<Button>修改描述</Button>}
                   title="修改描述"
                   autoFocusFirstInput
                   modalProps={{

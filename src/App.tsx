@@ -6,7 +6,7 @@ import Signup from './pages/Signup';
 import PublicLayout from "./components/PublicLayout";
 import ProtectedLayout from "./components/ProtectedLayout";
 import ProtectedPageLayout from "./components/DetailLayout";
-import RestrictedLayout from "./components/RestrictedLayout";
+import AdminLayout from "./components/AdminLayout";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Home from "./pages/Home";
@@ -44,9 +44,9 @@ function App() {
             <Route path="/case/:id" element={<Case />} />
           </Route>
 
-          <Route element={<RestrictedLayout />}>
-            <Route path="/admin-user" element={<AdminUser />} />
-            <Route path="/admin-case" element={<AdminCase />} />
+          <Route element={<AdminLayout />}>
+            <Route path="/admin/user" element={<AdminUser />} />
+            <Route path="/admin/case" element={<AdminCase />} />
           </Route>
 
           <Route path="/*" element={<Notfound />} />

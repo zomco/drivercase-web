@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         break;
       }
       case 401: {
-        navigate("/login", {replace: true});
+        logout();
         break;
       }
       default:
