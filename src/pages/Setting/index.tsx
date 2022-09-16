@@ -2,6 +2,7 @@ import React, {useRef} from "react";
 import {ProForm, ProFormInstance, ProFormText} from "@ant-design/pro-components";
 import {useAuth} from "../../hooks/useAuth";
 import {Button, message} from "antd";
+import {USERNAME_REGEXP, PASSWORD_REGEXP} from "../../utils/string";
 
 function Setting() {
   const formRef = useRef<ProFormInstance>();
@@ -46,7 +47,7 @@ function Setting() {
             disabled
             rules={[
               {required: true, whitespace: true},
-              {pattern: /^(?=[a-zA-Z0-9._]{5,12}$)(?!.*[_.]{2})[^_.].*[^_.]$/, message: '请输入符合规则的用户名'}
+              {pattern: USERNAME_REGEXP, message: '请输入符合规则的用户名'}
             ]}
         />
         <ProFormText.Password
@@ -58,7 +59,7 @@ function Setting() {
             rules={[
               {required: true, whitespace: true},
               {
-                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                pattern: PASSWORD_REGEXP,
                 message: '请输入符合规则的密码'
               }
             ]}
@@ -72,7 +73,7 @@ function Setting() {
             rules={[
               {required: true, whitespace: true},
               {
-                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                pattern: PASSWORD_REGEXP,
                 message: '请输入符合规则的密码'
               }
             ]}

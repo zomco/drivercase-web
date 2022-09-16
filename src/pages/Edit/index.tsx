@@ -5,14 +5,14 @@ import {useAuth} from "../../hooks/useAuth";
 import {useNavigate, useParams} from "react-router-dom";
 import {Button, Result, Upload, UploadFile} from "antd";
 import {CaseStatus} from "../../enums";
+import {PERSON_NAME_REGEXP, PERSON_CODE_REGEXP} from "../../utils/string";
 
 function Write() {
   const formRef = useRef<ProFormInstance>();
   const {put, get, del} = useAuth();
   const {id} = useParams();
-  const [updated, setUpdated] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
-  const status = formRef?.current?.getFieldValue('status');
   const [files, setFiles] = useState<UploadFile[]>([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function Write() {
 
 
   return (
-          updated ?
+          success ?
               <Result
                   status="success"
                   title="修改事件信息成功"
@@ -52,7 +52,7 @@ function Write() {
                     }
                     const result = await put<CaseCreateParam, CaseResult>(`/api/p/case/${id}`, param);
                     if (result) {
-                      setUpdated(true);
+                      setSuccess(true);
                     }
                   }}
                   validateMessages={{
@@ -66,76 +66,43 @@ function Write() {
               >
                 <ProFormText
                     name="name"
-                    label="司机姓名"
+                    label="司机姓名（2到6个汉字）"
                     width="md"
-                    tooltip="法人姓名"
-                    placeholder="请输入法人姓名"
+                    placeholder="请输入司机姓名"
                     rules={[
                       {required: true, whitespace: true},
-                      {pattern: /^[\u4E00-\u9FA5]{2,4}$/, message: '请输入有效姓名'}
+                      {pattern: PERSON_NAME_REGEXP, message: '请输入有效姓名'}
                     ]}
                 />
                 <ProFormText
                     name="code"
-                    label="司机身份证号码"
+                    label="司机身份证号码（18位身份证号码"
                     width="md"
-                    tooltip="18位身份证号码"
-                    placeholder="请输入法人身份证号码"
+                    placeholder="请输入司机身份证号码"
                     rules={[
                       {required: true, whitespace: true},
                       {
-                        pattern: /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+                        pattern: PERSON_CODE_REGEXP,
                         message: '请输入有效身份证号码'
                       }
                     ]}
                 />
-                {
-                  status === CaseStatus.TEMPLATE ?
-                      <ProFormTextArea
-                          name="review"
-                          label="修改后的事件描述"
-                          width="md"
-                          tooltip="确保事件描述与此一致，不修改其他事件信息，提交后事件可以直接发布"
-                          placeholder=""
-                          disabled
-                      /> :
-                      status === CaseStatus.TEMPLATE ?
-                          <ProFormTextArea
-                              name="review"
-                              label="修改意见"
-                              width="md"
-                              tooltip="根据修改意见修改事件描述"
-                              placeholder=""
-                              disabled
-                          /> : <div></div>
-                }
-                <ProFormTextArea
-                    name="description"
-                    label="事件描述"
-                    width="md"
-                    tooltip="具体描述事件发生的事件地点等细节"
-                    placeholder="请输入事件描述"
-                    rules={[
-                      {required: true, whitespace: true},
-                    ]}
-                />
                 <ProFormRadio.Group
                     name="visibility"
-                    layout="vertical"
+                    layout="horizontal"
                     label="隐私度"
                     width="md"
-                    tooltip="隐私度"
                     options={[
                       {
-                        label: '匿名发布',
+                        label: '匿名发布（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）',
                         value: 'PRIVATE',
                       },
                       {
-                        label: '可联系发布',
+                        label: '可联系发布（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）',
                         value: 'AUTHORIZE',
                       },
                       {
-                        label: '公开发布',
+                        label: '公开发布（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）',
                         value: 'PUBLIC',
                       },
                     ]}
@@ -143,10 +110,41 @@ function Write() {
                       {required: true},
                     ]}
                 />
+                <ProFormTextArea
+                    name="review"
+                    label={
+                  formRef.current?.getFieldValue('status') === CaseStatus.TEMPLATE ?
+                      '审核描述（修改事件描述，如与审核描述相同，可直接发布事件；修改其他字段，都需要重新审核）' :
+                      formRef.current?.getFieldValue('status') === CaseStatus.COMMENT ?
+                          '审核意见（请根据事件意见修改事件描述，然后提交重新审核）' :
+                          formRef.current?.getFieldValue('status') === CaseStatus.APPROVED ?
+                              '审核通过（修改任何字段，都需要重新审核）' : '等待审核（可以自由修改任何字段）'
+                    }
+                    placeholder=""
+                    fieldProps={{
+                      showCount: true,
+                      maxLength: 65535,
+                      allowClear: true,
+                    }}
+                    disabled
+                />
+                <ProFormTextArea
+                    name="description"
+                    label="事件描述"
+                    placeholder="请具体描述事情经过与结果"
+                    fieldProps={{
+                      showCount: true,
+                      maxLength: 65535,
+                      allowClear: true
+                    }}
+                    rules={[
+                      {required: true, whitespace: true},
+                    ]}
+                />
                 <ProFormUploadDragger
                     accept="image/*"
                     name="files"
-                    label="新增附件"
+                    label="新增附件（后缀为.png，.jpg且大小不超过10MB的图片）"
                     action="/api/upload"
                     fieldProps={{
                       listType: 'picture-card'

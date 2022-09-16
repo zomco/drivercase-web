@@ -4,6 +4,8 @@ import {ProTable} from '@ant-design/pro-components';
 import {CaseStatus, ContactStatus} from "../../enums";
 import {Button, Modal} from "antd";
 import {useNavigate} from "react-router-dom";
+import {Popconfirm} from "antd";
+import {QuestionCircleOutlined}  from "@ant-design/icons";
 
 function Home() {
   const {get, put, del} = useAuth();
@@ -73,17 +75,17 @@ function Home() {
                 width: '140px',
                 render: (text, record, index, action) => [
                   <a key="edit" href={`/edit/${record.id}`} target="_blank">修改</a>,
-                  <Button
+                  <Popconfirm
                       key="delete"
-                      type="primary"
-                      danger
-                      onClick={async () => {
+                      title="撤回不可恢复，继续吗？"
+                      icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                      onConfirm={async () => {
                         const result = await del<string>(`/api/p/case/${record.id}`);
                         if (result) {
                           navigate(0);
                         }
                       }}
-                  >撤回</Button>,
+                  ><a href="#">撤回</a></Popconfirm>
                 ],
               },
             ]}

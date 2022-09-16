@@ -4,8 +4,8 @@ import './App.css';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PublicLayout from "./components/PublicLayout";
-import ProtectedLayout from "./components/ProtectedLayout";
-import ProtectedPageLayout from "./components/DetailLayout";
+import ProtectLayout from "./components/ProtectLayout";
+import DetailLayout from "./components/DetailLayout";
 import AdminLayout from "./components/AdminLayout";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -19,6 +19,7 @@ import Case from "./pages/Case";
 import Notfound from "./pages/Notfound";
 import AdminCase from "./pages/AdminCase";
 import AdminUser from "./pages/AdminUser";
+import MainLayout from "./components/MainLayout";
 
 function App() {
   return (
@@ -31,18 +32,20 @@ function App() {
             <Route path="/terms" element={<Terms />} />
           </Route>
 
-          <Route element={<ProtectedLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/write" element={<Write />} />
-            <Route path="/setting" element={<Setting />} />
+          <Route element={<ProtectLayout />}>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/write" element={<Write />} />
+              <Route path="/setting" element={<Setting />} />
+            </Route>
+            <Route element={<DetailLayout />}>
+              <Route path="/edit/:id" element={<Edit />} />
+              <Route path="/case/:id" element={<Case />} />
+            </Route>
           </Route>
 
-          <Route element={<ProtectedPageLayout />}>
-            <Route path="/edit/:id" element={<Edit />} />
-            <Route path="/case/:id" element={<Case />} />
-          </Route>
 
           <Route element={<AdminLayout />}>
             <Route path="/admin/user" element={<AdminUser />} />

@@ -3,7 +3,8 @@ import type {ProFormInstance} from '@ant-design/pro-components';
 import {ProForm, ProFormRadio, ProFormText, ProFormTextArea, ProFormUploadDragger,} from '@ant-design/pro-components';
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
-import {Button, Result} from "antd";
+import {Button, Result, Space, Radio} from "antd";
+import {PERSON_NAME_REGEXP, PERSON_CODE_REGEXP} from "../../utils/string";
 
 function Write() {
   const formRef = useRef<ProFormInstance>();
@@ -40,56 +41,43 @@ function Write() {
           >
             <ProFormText
                 name="name"
-                label="司机姓名"
+                label="司机姓名（2到6个汉字）"
                 width="md"
-                tooltip="法人姓名"
                 placeholder="请输入法人姓名"
                 rules={[
                   {required: true, whitespace: true},
-                  {pattern: /^[\u4E00-\u9FA5]{2,4}$/, message: '请输入有效姓名'}
+                  {pattern: PERSON_NAME_REGEXP, message: '请输入有效姓名'}
                 ]}
             />
             <ProFormText
                 name="code"
-                label="司机身份证号码"
+                label="司机身份证号码（18位身份证号码）"
                 width="md"
-                tooltip="18位身份证号码"
                 placeholder="请输入法人身份证号码"
                 rules={[
                   {required: true, whitespace: true},
                   {
-                    pattern: /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+                    pattern: PERSON_CODE_REGEXP,
                     message: '请输入有效身份证号码'
                   }
                 ]}
             />
-            <ProFormTextArea
-                name="description"
-                label="事件描述"
-                width="md"
-                tooltip="具体描述事件发生的事件地点等细节"
-                placeholder="请输入事件描述"
-                rules={[
-                  {required: true, whitespace: true},
-                ]}
-            />
             <ProFormRadio.Group
                 name="visibility"
-                layout="vertical"
+                layout="horizontal"
                 label="隐私度"
                 width="md"
-                tooltip="隐私度"
                 options={[
                   {
-                    label: '匿名发布',
+                    label: '匿名发布（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）',
                     value: 'PRIVATE',
                   },
                   {
-                    label: '可联系发布',
+                    label: '可联系发布（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）',
                     value: 'AUTHORIZE',
                   },
                   {
-                    label: '公开发布',
+                    label: '公开发布（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）',
                     value: 'PUBLIC',
                   },
                 ]}
@@ -97,10 +85,23 @@ function Write() {
                   {required: true},
                 ]}
             />
+            <ProFormTextArea
+                name="description"
+                label="事件描述"
+                placeholder="请具体描述事情经过与结果"
+                fieldProps={{
+                  showCount: true,
+                  maxLength: 65535,
+                  allowClear: true
+                }}
+                rules={[
+                  {required: true, whitespace: true},
+                ]}
+            />
             <ProFormUploadDragger
-                accept="image/*"
+                accept="image/png,image/jpeg"
                 name="files"
-                label="事件附件"
+                label="事件附件（后缀为.png，.jpg且大小不超过10MB的图片）"
                 action="/api/upload"
                 fieldProps={{
                   listType: 'picture-card'

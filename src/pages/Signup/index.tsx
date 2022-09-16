@@ -235,7 +235,7 @@ function Signup() {
                         max={1}
                         accept="image/*"
                         name="cpFiles"
-                        label="营业执照"
+                        label="营业执照（后缀为.png，.jpg且大小不超过10MB的图片）"
                         action="/api/upload"
                         fieldProps={{
                           listType: 'picture-card'
@@ -319,7 +319,7 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="rpFiles1"
-                        label="身份证国徽面"
+                        label="身份证国徽面（后缀为.png，.jpg且大小不超过10MB的图片）"
                         accept="image/*"
                         action="/api/upload"
                         fieldProps={{
@@ -332,7 +332,7 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="rpFiles2"
-                        label="身份证人像面"
+                        label="身份证人像面（后缀为.png，.jpg且大小不超过10MB的图片）"
                         accept="image/*"
                         action="/api/upload"
                         fieldProps={{
@@ -428,7 +428,7 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="opFiles1"
-                        label="身份证国徽面"
+                        label="身份证国徽面（后缀为.png，.jpg且大小不超过10MB的图片）"
                         accept="image/*"
                         action="/api/upload"
                         fieldProps={{
@@ -441,7 +441,7 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="opFiles2"
-                        label="身份证人像面"
+                        label="身份证人像面（后缀为.png，.jpg且大小不超过10MB的图片）"
                         accept="image/*"
                         action="/api/upload"
                         fieldProps={{

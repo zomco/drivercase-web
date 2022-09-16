@@ -3,7 +3,7 @@ import {ProList} from '@ant-design/pro-components';
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth";
 import {message, Tag, Button} from 'antd';
-import {ContactStatus} from "../../enums";
+import {CaseVisibility, ContactStatus} from "../../enums";
 
 const validateDriver = (fields: any) => {
   if (!fields['name'] && !fields['code']) {
@@ -60,11 +60,8 @@ const validateDriver = (fields: any) => {
       }
     });
     // console.log('code matching:', code1Length, code2Length);
-    if (code2Length < 8 || code1Length + code2Length !== codeLength) {
-      // console.log('身份证组成不符合');
-      return false;
-    }
-    return true;
+    return !(code2Length < 8 || code1Length + code2Length !== codeLength);
+
   }
 }
 
@@ -122,13 +119,13 @@ function Search() {
                       break;
                   }
                 }
-                return `据 ${row.user.cpName} 描述所知，${row.name}，${row.code}，${row.description}。${padding}`
+                return `据 ${row.user.cpLocation} ${row.user.cpName} 描述所知，${row.name}，${row.code}，${row.description}。${padding}`
               }
             },
             actions: {
               render: (text, row) => {
                 return [
-                  !row.contact ?
+                  row.status === CaseVisibility.AUTHORIZE && !row.contact ?
                       <Button
                           key="contact"
                           type="primary"
