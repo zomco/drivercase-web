@@ -1,10 +1,6 @@
-import {Navigate, Outlet, useNavigate} from "react-router-dom";
+import {Navigate, Outlet} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth";
-import logo from "./logo.png";
-import React, {useEffect, useState} from 'react';
-import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
-import {SettingFilled, SmileFilled,} from '@ant-design/icons';
-import { Alert } from 'antd';
+import React from 'react';
 
 
 function ProtectLayout() {

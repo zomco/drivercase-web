@@ -1,5 +1,3 @@
-
-
 export const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])(?!.* ).{8,16}$/;
 
 export const USERNAME_REGEXP = /^(?=[a-zA-Z0-9._]{5,10}$)(?!.*[_.]{2})[^_.].*[^_.]$/;

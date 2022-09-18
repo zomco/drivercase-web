@@ -14,15 +14,14 @@ import level from './level.json';
 import axios, {AxiosError} from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {
-  USERNAME_REGEXP,
-  PASSWORD_REGEXP,
-  COMPANY_NAME_REGEXP,
   COMPANY_CODE_REGEXP,
+  COMPANY_NAME_REGEXP,
   MOBILE_REGEXP,
-  LANDLINE_REGEXP,
+  PASSWORD_REGEXP,
+  PERSON_CODE_REGEXP,
+  PERSON_NAME_REGEXP,
   PHONE_NUMBER_REGEXP,
-    PERSON_NAME_REGEXP,
-    PERSON_CODE_REGEXP,
+  USERNAME_REGEXP,
 } from "../../utils/string";
 
 

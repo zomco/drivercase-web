@@ -1,16 +1,9 @@
 import React, {useRef, useState} from "react";
-import {ProDescriptions, ProDescriptionsActionType, ProFormTextArea} from "@ant-design/pro-components";
-import {Button, Image, Form} from "antd";
+import {ModalForm, ProDescriptions, ProDescriptionsActionType, ProFormTextArea} from "@ant-design/pro-components";
+import {Button, Form, Image} from "antd";
 import {useAuth} from "../../hooks/useAuth";
-import {useNavigate, useParams} from "react-router-dom";
-import {CaseStatus, UserStatus} from "../../enums";
-import {
-  ModalForm,
-  ProForm,
-  ProFormDateRangePicker,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
+import {useNavigate} from "react-router-dom";
+import {CaseStatus} from "../../enums";
 
 function AdminCase() {
   const actionRef = useRef<ProDescriptionsActionType>();
@@ -59,7 +52,7 @@ function AdminCase() {
                       record.files?.map((value: any) =>
                           <Image
                               width="25vw"
-                              src={`/api/file/3/${value.name}`}
+                              src={value.value}
                               key={value.id}
                               alt={value.name}
                           />
@@ -81,8 +74,11 @@ function AdminCase() {
                     onCancel: () => console.log('run'),
                   }}
                   submitTimeout={2000}
-                  onFinish={async ({ review }) => {
-                    const result = await put<CaseReviewParam, string>(`/api/a/case/${caze?.id}`, {status: CaseStatus.COMMENT, review });
+                  onFinish={async ({review}) => {
+                    const result = await put<CaseReviewParam, string>(`/api/a/case/${caze?.id}`, {
+                      status: CaseStatus.COMMENT,
+                      review
+                    });
                     if (result) {
                       navigate(0);
                     }
@@ -109,8 +105,11 @@ function AdminCase() {
                     onCancel: () => console.log('run'),
                   }}
                   submitTimeout={2000}
-                  onFinish={async ({ review }) => {
-                    const result = await put<CaseReviewParam, string>(`/api/a/case/${caze?.id}`, {status: CaseStatus.TEMPLATE, review });
+                  onFinish={async ({review}) => {
+                    const result = await put<CaseReviewParam, string>(`/api/a/case/${caze?.id}`, {
+                      status: CaseStatus.TEMPLATE,
+                      review
+                    });
                     if (result) {
                       navigate(0);
                     }
@@ -132,7 +131,10 @@ function AdminCase() {
                   key="confirm"
                   type="primary"
                   onClick={async () => {
-                    const result = await put<CaseReviewParam, string>(`/api/a/case/${caze?.id}`, {status: CaseStatus.APPROVED, review: ''});
+                    const result = await put<CaseReviewParam, string>(`/api/a/case/${caze?.id}`, {
+                      status: CaseStatus.APPROVED,
+                      review: ''
+                    });
                     if (result) {
                       navigate(0);
                     }
@@ -140,7 +142,7 @@ function AdminCase() {
               >
                 通过
               </Button>
-            </ProDescriptions.Item>: null}
+            </ProDescriptions.Item> : null}
       </ProDescriptions>
   );
 }

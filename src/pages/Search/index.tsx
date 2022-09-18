@@ -2,7 +2,7 @@ import React from "react";
 import {ProList} from '@ant-design/pro-components';
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth";
-import {message, Tag, Button} from 'antd';
+import {Button, message} from 'antd';
 import {CaseVisibility, ContactStatus} from "../../enums";
 
 const validateDriver = (fields: any) => {
@@ -77,12 +77,12 @@ function Search() {
           request={async ({current, pageSize, ...fields}, sort, filter) => {
             console.log(current, pageSize, fields, sort, filter);
             if (!validateDriver(fields)) {
-             message.error("请输入符合规则的搜索参数");
-             return {
-               success: false
-             }
+              message.error("请输入符合规则的搜索参数");
+              return {
+                success: false
+              }
             }
-            const padding = !!Object.keys(fields).length ? `&${Object.keys(fields).map(key => `${key}=${fields[key]}`).join('&')}`: '';
+            const padding = !!Object.keys(fields).length ? `&${Object.keys(fields).map(key => `${key}=${fields[key]}`).join('&')}` : '';
             const result = await get(`/api/s/case?page=${current ? current - 1 : 0}&size=${pageSize}${padding}`);
             if (!!result) {
               return {

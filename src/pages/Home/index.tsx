@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth";
 import {ProTable} from '@ant-design/pro-components';
-import {CaseStatus, ContactStatus} from "../../enums";
-import {Button, Modal} from "antd";
+import {ContactStatus} from "../../enums";
+import {Button, Modal, Popconfirm} from "antd";
 import {useNavigate} from "react-router-dom";
-import {Popconfirm} from "antd";
-import {QuestionCircleOutlined}  from "@ant-design/icons";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 function Home() {
   const {get, put, del} = useAuth();
@@ -27,7 +26,7 @@ function Home() {
         <ProTable
             request={async ({current, pageSize, ...fields}, sort, filter) => {
               console.log(current, pageSize, fields, sort, filter);
-              const padding = !!Object.keys(fields).length ? `&${Object.keys(fields).map(key => `${key}=${fields[key]}`).join('&')}`: '';
+              const padding = !!Object.keys(fields).length ? `&${Object.keys(fields).map(key => `${key}=${fields[key]}`).join('&')}` : '';
               const result = await get(`/api/p/case?page=${current ? current - 1 : 0}&size=${pageSize}${padding}`);
               if (!!result) {
                 return {
@@ -78,7 +77,7 @@ function Home() {
                   <Popconfirm
                       key="delete"
                       title="撤回不可恢复，继续吗？"
-                      icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                      icon={<QuestionCircleOutlined style={{color: 'red'}} />}
                       onConfirm={async () => {
                         const result = await del<string>(`/api/p/case/${record.id}`);
                         if (result) {

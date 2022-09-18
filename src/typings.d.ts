@@ -193,4 +193,5 @@ type ContactResult = {
 type MediaFileResult = {
   id: string,
   name: string,
+  value: string,
 }

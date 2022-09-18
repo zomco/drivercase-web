@@ -2,8 +2,7 @@ import React, {useRef} from "react";
 import {ProDescriptions, ProDescriptionsActionType} from '@ant-design/pro-components';
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, Image, Tag} from 'antd';
-import {CaseVisibility, ContactStatus} from "../../enums";
+import {Image} from 'antd';
 
 function Case() {
   const actionRef = useRef<ProDescriptionsActionType>();
@@ -60,7 +59,7 @@ function Case() {
                       record.files.map((value: any) =>
                           <Image
                               width="25vw"
-                              src={`/api/file/3/${value.name}`}
+                              src={value.value}
                               key={value.id}
                               alt={value.name}
                           />

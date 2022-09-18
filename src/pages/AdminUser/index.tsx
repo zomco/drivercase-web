@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {ProDescriptions, ProDescriptionsActionType} from "@ant-design/pro-components";
 import {useAuth} from "../../hooks/useAuth";
-import {Image, Button, Result} from "antd";
-import {ContactStatus, UserStatus} from "../../enums";
+import {Button, Image} from "antd";
+import {UserStatus} from "../../enums";
 import {useNavigate} from "react-router-dom";
-import {SmileOutlined} from '@ant-design/icons';
 
 function AdminUser() {
   const actionRef = useRef<ProDescriptionsActionType>();
@@ -13,7 +12,7 @@ function AdminUser() {
   const navigate = useNavigate();
 
   return (
-        <ProDescriptions
+      <ProDescriptions
           actionRef={actionRef}
           column={1}
           title="用户信息"
@@ -61,7 +60,7 @@ function AdminUser() {
                       record.cpFiles?.map((value: any) =>
                           <Image
                               width="25vw"
-                              src={`/api/file/0/${value.name}`}
+                              src={value.value}
                               key={value.id}
                               alt={value.name}
                           />
@@ -95,7 +94,7 @@ function AdminUser() {
                       record.rpFiles?.map((value: any) =>
                           <Image
                               width="25vw"
-                              src={`/api/file/2/${value.name}`}
+                              src={value.value}
                               key={value.id}
                               alt={value.name}
                           />
@@ -129,7 +128,7 @@ function AdminUser() {
                       record.opFiles?.map((value: any) =>
                           <Image
                               width="25vw"
-                              src={`/api/file/1/${value.name}`}
+                              src={value.value}
                               key={value.id}
                               alt={value.name}
                           />
@@ -139,47 +138,47 @@ function AdminUser() {
               ),
             }
           ]}
-        >
-          {!!user ?
-          <ProDescriptions.Item label="文本" valueType="option">
-            <Button
-                key="reject"
-                type="primary"
-                danger
-                onClick={async () => {
-                  const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.INACTIVE});
-                  if (result) {
-                    navigate(0);
-                  }
-                }}
-            >
-              拒绝
-            </Button>
-            <Button
-                key="confirm"
-                type="primary"
-                onClick={async () => {
-                  const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.ACTIVE});
-                  if (result) {
-                    navigate(0);
-                  }
-                }}
-            >
-              允许
-            </Button>
-            <Button
-                key="uncertain"
-                onClick={async () => {
-                  const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.UNCERTAIN});
-                  if (result) {
-                    navigate(0);
-                  }
-                }}
-            >
-              跳过
-            </Button>
-          </ProDescriptions.Item> : null}
-        </ProDescriptions>
+      >
+        {!!user ?
+            <ProDescriptions.Item label="文本" valueType="option">
+              <Button
+                  key="reject"
+                  type="primary"
+                  danger
+                  onClick={async () => {
+                    const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.INACTIVE});
+                    if (result) {
+                      navigate(0);
+                    }
+                  }}
+              >
+                拒绝
+              </Button>
+              <Button
+                  key="confirm"
+                  type="primary"
+                  onClick={async () => {
+                    const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.ACTIVE});
+                    if (result) {
+                      navigate(0);
+                    }
+                  }}
+              >
+                允许
+              </Button>
+              <Button
+                  key="uncertain"
+                  onClick={async () => {
+                    const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.UNCERTAIN});
+                    if (result) {
+                      navigate(0);
+                    }
+                  }}
+              >
+                跳过
+              </Button>
+            </ProDescriptions.Item> : null}
+      </ProDescriptions>
   );
 }
 

@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import {ProForm, ProFormInstance, ProFormText} from "@ant-design/pro-components";
 import {useAuth} from "../../hooks/useAuth";
 import {Button, message} from "antd";
-import {USERNAME_REGEXP, PASSWORD_REGEXP} from "../../utils/string";
+import {PASSWORD_REGEXP, USERNAME_REGEXP} from "../../utils/string";
 
 function Setting() {
   const formRef = useRef<ProFormInstance>();

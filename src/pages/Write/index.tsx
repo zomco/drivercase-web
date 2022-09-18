@@ -3,8 +3,8 @@ import type {ProFormInstance} from '@ant-design/pro-components';
 import {ProForm, ProFormRadio, ProFormText, ProFormTextArea, ProFormUploadDragger,} from '@ant-design/pro-components';
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
-import {Button, Result, Space, Radio} from "antd";
-import {PERSON_NAME_REGEXP, PERSON_CODE_REGEXP} from "../../utils/string";
+import {Button, Result} from "antd";
+import {PERSON_CODE_REGEXP, PERSON_NAME_REGEXP} from "../../utils/string";
 
 function Write() {
   const formRef = useRef<ProFormInstance>();

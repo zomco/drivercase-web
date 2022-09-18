@@ -3,7 +3,7 @@ import {useAuth} from "../../hooks/useAuth";
 import logo from "./logo.png";
 import React from 'react';
 import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
-import {SettingFilled, SmileFilled,} from '@ant-design/icons';
+import {SmileFilled,} from '@ant-design/icons';
 
 
 function AdminLayout() {

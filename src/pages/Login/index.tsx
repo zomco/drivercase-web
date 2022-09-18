@@ -5,7 +5,7 @@ import {useState} from 'react';
 import logo from './logo.png';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import {useAuth} from "../../hooks/useAuth";
-import {USERNAME_REGEXP, PASSWORD_REGEXP} from "../../utils/string";
+import {PASSWORD_REGEXP, USERNAME_REGEXP} from "../../utils/string";
 
 type LoginType = 'phone' | 'account';
 
