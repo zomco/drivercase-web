@@ -34,4 +34,4 @@ jobs:
             cd drivercase-web
             git pull
             npm install
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S pm2 restart all
+            pm2 restart drivercase-web
