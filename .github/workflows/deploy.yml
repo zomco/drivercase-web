@@ -34,4 +34,5 @@ jobs:
             cd drivercase-web
             git pull
             npm install
+            npm run build
             pm2 restart drivercase-web
