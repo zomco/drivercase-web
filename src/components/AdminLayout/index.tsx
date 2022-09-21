@@ -7,8 +7,8 @@ import {SmileFilled,} from '@ant-design/icons';
 
 
 function AdminLayout() {
-  const navigate = useNavigate();
   const {user} = useAuth();
+
   if (!user) {
     return <Navigate to="/login" />;
   }
@@ -23,35 +23,7 @@ function AdminLayout() {
             height: '100vh',
           }}
       >
-        <ProLayout
-            fixSiderbar
-            layout="top"
-            splitMenus
-            logo={logo}
-            title={user.cpName}
-            route={{
-              path: '/',
-              routes: [
-                {
-                  path: '/admin/user',
-                  name: '用户',
-                  icon: <SmileFilled />
-                },
-                {
-                  path: '/admin/case',
-                  name: '事件',
-                  icon: <SmileFilled />
-                },
-              ]
-            }}
-            menuItemRender={(item, dom) => <div onClick={() => navigate(item.path || '/')}>{dom}</div>}
-        >
-          <PageContainer>
-            <ProCard>
-              <Outlet />
-            </ProCard>
-          </PageContainer>
-        </ProLayout>
+        <Outlet />
       </div>
   );
 }

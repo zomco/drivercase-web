@@ -3,7 +3,7 @@ import React from 'react';
 import {PageContainer, ProCard} from "@ant-design/pro-components";
 
 
-function DetailLayout() {
+function ProtectDetailLayout() {
   return (
       <PageContainer>
         <ProCard>
@@ -13,4 +13,4 @@ function DetailLayout() {
   );
 }
 
-export default DetailLayout;
+export default ProtectDetailLayout;

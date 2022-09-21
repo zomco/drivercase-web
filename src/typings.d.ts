@@ -112,25 +112,6 @@ type UserResult = {
   contacts?: ContactResult[],
 }
 
-type AdminUserResult = {
-  id: string,
-  name: string,
-  cpLocation: string,
-  cpName: string,
-  cpCode: string,
-  cpMobile: string,
-  rpName: string,
-  rpCode: string,
-  rpMobile: string,
-  opName: string,
-  opCode: string,
-  opMobile: string,
-
-  cpFiles?: MediaFileResult[],
-  rpFiles?: MediaFileResult[],
-  opFiles?: MediaFileResult[],
-}
-
 /**
  * Case
  */
@@ -162,17 +143,6 @@ type CaseResult = {
   updateTime: string,
 }
 
-type AdminCaseResult = {
-  id: string,
-  name: string,
-  code: string,
-  description: string,
-
-  status: CaseStatus,
-  review?: string,
-  files?: MediaFileResult[],
-}
-
 /**
  * Contact
  */
@@ -195,4 +165,43 @@ type MediaFileResult = {
   id: string,
   name: string,
   value: string,
+}
+
+/**
+ * Admin
+ */
+
+type AdminUserResult = {
+  id: string,
+  name: string,
+  cpLocation: string,
+  cpName: string,
+  cpCode: string,
+  cpMobile: string,
+  rpName: string,
+  rpCode: string,
+  rpMobile: string,
+  opName: string,
+  opCode: string,
+  opMobile: string,
+
+  cpFiles?: MediaFileResult[],
+  rpFiles?: MediaFileResult[],
+  opFiles?: MediaFileResult[],
+}
+
+type AdminCaseResult = {
+  id: string,
+  name: string,
+  code: string,
+  description: string,
+
+  status: CaseStatus,
+  review?: string,
+  files?: MediaFileResult[],
+}
+
+type AdminCountResult = {
+  user: string,
+  caze: string,
 }

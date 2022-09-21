@@ -9,7 +9,7 @@ import Marquee from 'react-fast-marquee';
 import moment from 'moment';
 
 
-function ProtectedLayout() {
+function ProtectedMainLayout() {
   const navigate = useNavigate();
   const {user, get} = useAuth();
   const [cases, setCases] = useState<CaseResult[]>();
@@ -81,4 +81,4 @@ function ProtectedLayout() {
   );
 }
 
-export default ProtectedLayout;
+export default ProtectedMainLayout;

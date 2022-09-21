@@ -27,6 +27,7 @@ function AdminUser() {
           actionRef={actionRef}
           column={1}
           title="用户信息"
+          dataSource={users[index]}
           columns={[
             {
               title: '用户名',

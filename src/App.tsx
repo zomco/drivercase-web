@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PublicLayout from "./components/PublicLayout";
 import ProtectLayout from "./components/ProtectLayout";
-import DetailLayout from "./components/DetailLayout";
+import ProtectDetailLayout from "./components/ProtectDetailLayout";
 import AdminLayout from "./components/AdminLayout";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -19,7 +19,8 @@ import Case from "./pages/Case";
 import Notfound from "./pages/Notfound";
 import AdminCase from "./pages/AdminCase";
 import AdminUser from "./pages/AdminUser";
-import MainLayout from "./components/MainLayout";
+import ProtectMainLayout from "./components/ProtectMainLayout";
+import AdminMainLayout from "./components/AdminMainLayout";
 
 function App() {
   return (
@@ -33,14 +34,14 @@ function App() {
           </Route>
 
           <Route element={<ProtectLayout />}>
-            <Route element={<MainLayout />}>
+            <Route element={<ProtectMainLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/search" element={<Search />} />
               <Route path="/write" element={<Write />} />
               <Route path="/setting" element={<Setting />} />
             </Route>
-            <Route element={<DetailLayout />}>
+            <Route element={<ProtectDetailLayout />}>
               <Route path="/edit/:id" element={<Edit />} />
               <Route path="/case/:id" element={<Case />} />
             </Route>
@@ -48,8 +49,10 @@ function App() {
 
 
           <Route element={<AdminLayout />}>
-            <Route path="/admin/user" element={<AdminUser />} />
-            <Route path="/admin/case" element={<AdminCase />} />
+            <Route element={<AdminMainLayout />}>
+              <Route path="/admin/user" element={<AdminUser />} />
+              <Route path="/admin/case" element={<AdminCase />} />
+            </Route>
           </Route>
 
           <Route path="/*" element={<Notfound />} />
