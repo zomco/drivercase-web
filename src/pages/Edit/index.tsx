@@ -66,7 +66,7 @@ function Write() {
           >
             <ProFormText
                 name="name"
-                label="司机姓名（2到6个汉字）"
+                label={<div>司机姓名<span style={{fontSize:'12px', color: 'gray'}}>（2到6个汉字）</span></div>}
                 width="md"
                 placeholder="请输入司机姓名"
                 rules={[
@@ -76,7 +76,7 @@ function Write() {
             />
             <ProFormText
                 name="code"
-                label="司机身份证号码（18位身份证号码"
+                label={<div>司机身份证号码<span style={{fontSize:'12px', color: 'gray'}}>（18位身份证号码）</span></div>}
                 width="md"
                 placeholder="请输入司机身份证号码"
                 rules={[
@@ -94,15 +94,15 @@ function Write() {
                 width="md"
                 options={[
                   {
-                    label: '匿名发布（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）',
+                    label: <span>匿名发布<span style={{fontSize:'12px', color: 'gray'}}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）</span></span>,
                     value: 'PRIVATE',
                   },
                   {
-                    label: '可联系发布（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）',
+                    label: <span>可联系发布<span style={{fontSize:'12px', color: 'gray'}}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）</span></span>,
                     value: 'AUTHORIZE',
                   },
                   {
-                    label: '公开发布（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）',
+                    label: <span>公开发布<span style={{fontSize:'12px', color: 'gray'}}>（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）</span></span>,
                     value: 'PUBLIC',
                   },
                 ]}
@@ -114,11 +114,12 @@ function Write() {
                 name="review"
                 label={
                   formRef.current?.getFieldValue('status') === CaseStatus.TEMPLATE ?
-                      '审核描述（修改事件描述，如与审核描述相同，可直接发布事件；修改其他字段，都需要重新审核）' :
+                      <div>审核描述<span style={{fontSize:'12px', color: 'gray'}}>（将审核描述内内容直接覆盖到“事件描述”可直接发布事件；修改其他字段，需重新审核）</span></div> :
                       formRef.current?.getFieldValue('status') === CaseStatus.COMMENT ?
-                          '审核意见（请根据事件意见修改事件描述，然后提交重新审核）' :
+                          <div>审核意见<span style={{fontSize:'12px', color: 'gray'}}>（请根据事件意见修改事件描述，然后提交重新审核）</span></div> :
                           formRef.current?.getFieldValue('status') === CaseStatus.APPROVED ?
-                              '审核通过（修改任何字段，都需要重新审核）' : '等待审核（可以自由修改任何字段）'
+                              <div>审核通过<span style={{fontSize:'12px', color: 'gray'}}>（修改任何字段，都需要重新审核）</span></div> :
+                              <div>等待审核<span style={{fontSize:'12px', color: 'gray'}}>（可以自由修改任何字段）</span></div>
                 }
                 placeholder=""
                 fieldProps={{
@@ -126,7 +127,7 @@ function Write() {
                   maxLength: 65535,
                   allowClear: true,
                 }}
-                disabled
+                readonly
             />
             <ProFormTextArea
                 name="description"
@@ -144,7 +145,7 @@ function Write() {
             <ProFormUploadDragger
                 accept="image/*"
                 name="files"
-                label="新增附件（后缀为.png，.jpg且大小不超过10MB的图片）"
+                label={<div>新增附件<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
                 action="/api/upload"
                 fieldProps={{
                   listType: 'picture-card'

@@ -159,6 +159,7 @@ type CaseResult = {
   review?: string,
   files?: MediaFileResult[],
   user: UserResult,
+  updateTime: string,
 }
 
 type AdminCaseResult = {

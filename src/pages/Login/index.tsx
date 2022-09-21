@@ -21,7 +21,7 @@ function Login() {
         <LoginForm
             logo={logo}
             title="行者平台"
-            subTitle="一个为运输企业降低风险的平台"
+            subTitle="一个为企业降低风险的平台"
             onFinish={async (values: LoginParam) => {
               try {
                 const response: AxiosResponse<ResultData<LoginResult>, LoginParam> = await axios.post('/api/login', values);

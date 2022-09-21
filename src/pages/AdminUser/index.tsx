@@ -1,29 +1,32 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ProDescriptions, ProDescriptionsActionType} from "@ant-design/pro-components";
 import {useAuth} from "../../hooks/useAuth";
-import {Button, Image} from "antd";
+import {Button, Image, Result} from "antd";
 import {UserStatus} from "../../enums";
 import {useNavigate} from "react-router-dom";
+import {SmileOutlined} from "@ant-design/icons";
 
 function AdminUser() {
   const actionRef = useRef<ProDescriptionsActionType>();
   const {get, put} = useAuth();
-  const [user, setUser] = useState<AdminUserResult>();
+  const [users, setUsers] = useState<AdminUserResult[]>();
+  const [index, setIndex] = useState<number>(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await get<AdminUserResult[]>(`/api/a/user`);
+      if (result) {
+        setUsers(result);
+      }
+    }
+    fetchData().then();
+  }, []);
   const navigate = useNavigate();
 
-  return (
+  return !!users && !!users[index] ?(
       <ProDescriptions
           actionRef={actionRef}
           column={1}
           title="用户信息"
-          request={async () => {
-            const results = await get<AdminUserResult[]>(`/api/a/user`);
-            setUser(results?.[0]);
-            return {
-              success: !!results,
-              data: results?.[0],
-            }
-          }}
           columns={[
             {
               title: '用户名',
@@ -139,47 +142,61 @@ function AdminUser() {
             }
           ]}
       >
-        {!!user ?
-            <ProDescriptions.Item label="文本" valueType="option">
-              <Button
-                  key="reject"
-                  type="primary"
-                  danger
-                  onClick={async () => {
-                    const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.INACTIVE});
-                    if (result) {
-                      navigate(0);
-                    }
-                  }}
-              >
-                拒绝
-              </Button>
-              <Button
-                  key="confirm"
-                  type="primary"
-                  onClick={async () => {
-                    const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.ACTIVE});
-                    if (result) {
-                      navigate(0);
-                    }
-                  }}
-              >
-                允许
-              </Button>
-              <Button
-                  key="uncertain"
-                  onClick={async () => {
-                    const result = await put<UserReviewParam, string>(`/api/a/user/${user?.id}`, {status: UserStatus.UNCERTAIN});
-                    if (result) {
-                      navigate(0);
-                    }
-                  }}
-              >
-                跳过
-              </Button>
-            </ProDescriptions.Item> : null}
-      </ProDescriptions>
-  );
+        <ProDescriptions.Item label="文本" valueType="option">
+          <Button
+              key="reject"
+              type="primary"
+              danger
+              onClick={async () => {
+                const result = await put<UserReviewParam, string>(`/api/a/user/${users[index].id}`, {status: UserStatus.INACTIVE});
+                if (result) {
+                  navigate(0);
+                }
+              }}
+          >
+            拒绝
+          </Button>
+          <Button
+              key="confirm"
+              type="primary"
+              onClick={async () => {
+                const result = await put<UserReviewParam, string>(`/api/a/user/${users[index].id}`, {status: UserStatus.ACTIVE});
+                if (result) {
+                  navigate(0);
+                }
+              }}
+          >
+            允许
+          </Button>
+          <Button
+              key="uncertain"
+              onClick={async () => {
+                const result = await put<UserReviewParam, string>(`/api/a/user/${users[index].id}`, {status: UserStatus.UNCERTAIN});
+                if (result) {
+                  navigate(0);
+                }
+              }}
+          >
+            跳过
+          </Button>
+          <Button
+              key="previous"
+              onClick={() => setIndex(index + 1 > users.length - 1 ? users.length - 1 : index + 1)}
+          >
+            上一条
+          </Button>
+          <Button
+              key="next"
+              onClick={ () => setIndex(index - 1 < 0 ? 0 : index - 1)}
+          >
+            下一条
+          </Button>
+        </ProDescriptions.Item>
+      </ProDescriptions>) :
+      <Result
+        icon={<SmileOutlined />}
+        title="所有审核已处理!"
+      />;
 }
 
 export default AdminUser;
