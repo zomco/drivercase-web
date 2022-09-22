@@ -182,13 +182,13 @@ function AdminUser() {
           </Button>
           <Button
               key="previous"
-              onClick={() => setIndex(index + 1 > users.length - 1 ? users.length - 1 : index + 1)}
+              onClick={ () => setIndex(index - 1 < 0 ? 0 : index - 1)}
           >
             上一条
           </Button>
           <Button
               key="next"
-              onClick={ () => setIndex(index - 1 < 0 ? 0 : index - 1)}
+              onClick={() => setIndex(index + 1 > users.length - 1 ? users.length - 1 : index + 1)}
           >
             下一条
           </Button>
