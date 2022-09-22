@@ -3,7 +3,8 @@ import {ProList} from '@ant-design/pro-components';
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth";
 import {Button, message} from 'antd';
-import {CaseVisibility, ContactStatus} from "../../enums";
+import {CaseSource, CaseVisibility, ContactStatus} from "../../enums";
+import {PERSON_CODE_REGEXP, PERSON_NAME_REGEXP} from "../../utils/string";
 
 const validateDriver = (fields: any) => {
   if (!fields['name'] && !fields['code']) {
@@ -17,8 +18,7 @@ const validateDriver = (fields: any) => {
 
   if (!fields['fuzzy']) {
     // console.log('精准搜索');
-    return /^[\u4E00-\u9FA5]{2,4}$/.test(fields['name']) &&
-        /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(fields['code']);
+    return PERSON_NAME_REGEXP.test(fields['name']) && PERSON_CODE_REGEXP.test(fields['code']);
   } else {
     // console.log('模糊搜索');
     // 匹配名字
@@ -105,6 +105,11 @@ function Search() {
               dataIndex: 'name',
               title: '司机姓名',
               render: (text, row) => {
+                console.log(row.source);
+                if (row.source === CaseSource.ADMIN) {
+                  return `据 ${row.cpLocation} ${row.cpName} 描述所知，${row.name}，${row.code}，${row.description}。`
+                }
+
                 let padding = `对方公司 ${row.user.cpMobile}`;
                 if (row.contact) {
                   switch (row.contact.status) {

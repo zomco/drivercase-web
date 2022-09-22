@@ -30,3 +30,8 @@ export enum CaseVisibility {
   PUBLIC = "PUBLIC",
   AUTHORIZE = "AUTHORIZE",
 }
+
+export enum CaseSource {
+  USER = "USER",
+  ADMIN = "ADMIN",
+}

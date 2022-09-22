@@ -135,6 +135,9 @@ type CaseResult = {
   code: string,
   description: string,
   visibility: CaseVisibility,
+  source: CaseSource,
+  cpName: string,
+  cpLocation: string,
 
   status: CaseStatus,
   review?: string,

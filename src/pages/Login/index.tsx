@@ -24,7 +24,7 @@ function Login() {
             subTitle="一个为企业降低风险的平台"
             onFinish={async (values: LoginParam) => {
               try {
-                const response: AxiosResponse<ResultData<LoginResult>, LoginParam> = await axios.post('/api/login', values);
+                const response: AxiosResponse<ResultData<LoginResult>, LoginParam> = await axios.post('/api/o/login', values);
                 await login(response.data.result);
                 return true;
               } catch (e) {

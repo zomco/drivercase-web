@@ -7,6 +7,7 @@ import {SettingFilled, SmileFilled,} from '@ant-design/icons';
 import {Alert} from 'antd';
 import Marquee from 'react-fast-marquee';
 import moment from 'moment';
+import {CaseSource} from "../../enums";
 
 
 function ProtectedMainLayout() {
@@ -66,7 +67,10 @@ function ProtectedMainLayout() {
         {!!cases ? <Alert
             message={
               <Marquee pauseOnHover gradient={false}>
-                {cases.map(v => `${v.name}（${v.code}）与 ${v.user.cpLocation} ${v.user.cpName} 发生过纠纷，${moment().diff(moment(v.updateTime), 'days')} 日前在我平台等级发布成功。`).join(' ')}
+                {cases.map(v => {
+                  const count = moment().diff(moment(v.updateTime), 'days');
+                  return `${v.name}（${v.code}）与 ${v.source === CaseSource.ADMIN ? v.cpLocation : v.user.cpLocation} ${v.source === CaseSource.ADMIN ? v.cpName : v.user.cpName} 发生过纠纷，${count === 0 ? '本日' : `${count}日前`}在我平台等级发布成功。`
+                }).join(' ')}
               </Marquee>
             }
             banner

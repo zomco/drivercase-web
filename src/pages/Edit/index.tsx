@@ -146,7 +146,7 @@ function Write() {
                 accept="image/*"
                 name="files"
                 label={<div>新增附件<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
-                action="/api/upload"
+                action="/api/o/upload"
                 fieldProps={{
                   listType: 'picture-card'
                 }}

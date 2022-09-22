@@ -102,7 +102,7 @@ function Write() {
                 accept="image/png,image/jpeg"
                 name="files"
                 label={<div>事件附件<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
-                action="/api/upload"
+                action="/api/o/upload"
                 fieldProps={{
                   listType: 'picture-card'
                 }}

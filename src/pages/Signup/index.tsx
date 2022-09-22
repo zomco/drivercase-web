@@ -95,7 +95,7 @@ function Signup() {
                           {
                             validator: async (_, value) => {
                               try {
-                                await axios.get(`/api/validate?username=${value}`);
+                                await axios.get(`/api/o/validate?username=${value}`);
                               } catch (e) {
                                 throw new Error('用户已存在');
                               }
@@ -235,7 +235,7 @@ function Signup() {
                         accept="image/*"
                         name="cpFiles"
                         label={<div>营业执照<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
-                        action="/api/upload"
+                        action="/api/o/upload"
                         fieldProps={{
                           listType: 'picture-card'
                         }}
@@ -308,7 +308,7 @@ function Signup() {
                         ]}
                         placeholder="请输入验证码"
                         onGetCaptcha={async (phone) => {
-                          const result = await axios.post('/api/captcha', {type: 1, mobile: phone});
+                          const result = await axios.post('/api/o/captcha', {type: 1, mobile: phone});
                           if (!result.data.success) {
                             throw new Error(result.data.message);
                           }
@@ -320,7 +320,7 @@ function Signup() {
                         name="rpFiles1"
                         label={<div>身份证国徽面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
                         accept="image/*"
-                        action="/api/upload"
+                        action="/api/o/upload"
                         fieldProps={{
                           listType: 'picture-card'
                         }}
@@ -333,7 +333,7 @@ function Signup() {
                         name="rpFiles2"
                         label={<div>身份证人像面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
                         accept="image/*"
-                        action="/api/upload"
+                        action="/api/o/upload"
                         fieldProps={{
                           listType: 'picture-card'
                         }}
@@ -359,7 +359,7 @@ function Signup() {
                         }
                         console.log(values);
                         try {
-                          const result: ResultData<String> = await axios.post('/api/signup', param);
+                          const result: ResultData<String> = await axios.post('/api/o/signup', param);
                           setSuccess(true);
                         } catch (e) {
                           const err = e as AxiosError<ResultData<LoginResult>, LoginParam>;
@@ -417,7 +417,7 @@ function Signup() {
                           {pattern: /^\d{6}$/, message: '请输入有效验证码'}
                         ]}
                         onGetCaptcha={async (phone) => {
-                          const result = await axios.post('/api/captcha', {type: 2, mobile: phone});
+                          const result = await axios.post('/api/o/captcha', {type: 2, mobile: phone});
                           if (!result.data.success) {
                             throw new Error(result.data.message);
                           }
@@ -429,7 +429,7 @@ function Signup() {
                         name="opFiles1"
                         label={<div>身份证国徽面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
                         accept="image/*"
-                        action="/api/upload"
+                        action="/api/o/upload"
                         fieldProps={{
                           listType: 'picture-card'
                         }}
@@ -442,7 +442,7 @@ function Signup() {
                         name="opFiles2"
                         label={<div>身份证人像面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
                         accept="image/*"
-                        action="/api/upload"
+                        action="/api/o/upload"
                         fieldProps={{
                           listType: 'picture-card'
                         }}
