@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ModalForm, ProDescriptions, ProDescriptionsActionType, ProFormTextArea} from "@ant-design/pro-components";
-import {Button, Form, Image, Result} from "antd";
+import {Button, Image, Result} from "antd";
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
 import {CaseStatus} from "../../enums";
@@ -145,7 +145,7 @@ function AdminCase() {
           </Button>
           <Button
               key="previous"
-              onClick={ () => setIndex(index - 1 < 0 ? 0 : index - 1)}
+              onClick={() => setIndex(index - 1 < 0 ? 0 : index - 1)}
           >
             上一条
           </Button>

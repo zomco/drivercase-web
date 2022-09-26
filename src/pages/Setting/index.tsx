@@ -39,7 +39,8 @@ function Setting() {
       >
         <ProFormText
             name="username"
-            label={<div>用户名<span style={{fontSize:'12px', color: 'gray'}}>可以包含字母数字、下划线_和句号.，长度为5到10位</span></div>}
+            label={<div>用户名<span
+                style={{fontSize: '12px', color: 'gray'}}>可以包含字母数字、下划线_和句号.，长度为5到10位</span></div>}
             width="md"
             placeholder="请输入名称"
             initialValue={user.username}
@@ -51,7 +52,10 @@ function Setting() {
         />
         <ProFormText.Password
             name="oldPassword"
-            label={<div>旧密码<span style={{fontSize:'12px', color: 'gray'}}>（至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位）</span></div>}
+            label={<div>旧密码<span style={{
+              fontSize: '12px',
+              color: 'gray'
+            }}>（至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位）</span></div>}
             width="md"
             placeholder="请输入密码"
             rules={[
@@ -64,7 +68,10 @@ function Setting() {
         />
         <ProFormText.Password
             name="newPassword"
-            label={<div>新密码<span style={{fontSize:'12px', color: 'gray'}}>（至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位）</span></div>}
+            label={<div>新密码<span style={{
+              fontSize: '12px',
+              color: 'gray'
+            }}>（至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位）</span></div>}
             width="md"
             placeholder="请输入密码"
             rules={[
@@ -77,7 +84,10 @@ function Setting() {
         />
         <ProFormText.Password
             name="repeat"
-            label={<div>确认新密码<span style={{fontSize:'12px', color: 'gray'}}>（至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位）</span></div>}
+            label={<div>确认新密码<span style={{
+              fontSize: '12px',
+              color: 'gray'
+            }}>（至少包含数字、小写字母、大写字母和特殊符号，且无空格，长度为8到16位）</span></div>}
             width="md"
             placeholder="请重复输入密码"
             rules={[

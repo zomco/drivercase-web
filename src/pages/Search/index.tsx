@@ -130,7 +130,7 @@ function Search() {
             actions: {
               render: (text, row) => {
                 return [
-                  row.status === CaseVisibility.AUTHORIZE && !row.contact ?
+                  row.visibility === CaseVisibility.AUTHORIZE && !row.contact ?
                       <Button
                           key="contact"
                           type="primary"

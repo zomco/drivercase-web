@@ -83,7 +83,10 @@ function Signup() {
                   >
                     <ProFormText
                         name="username"
-                        label={<div>用户名<span style={{fontSize:'12px', color: 'gray'}}>（可以是由字母或数字或符号组成，长度为5到20位，建议使用常用的公司缩写或手机或邮箱）</span></div>}
+                        label={<div>用户名<span style={{
+                          fontSize: '12px',
+                          color: 'gray'
+                        }}>（可以是由字母或数字或符号组成，长度为5到20位，建议使用常用的公司缩写或手机或邮箱）</span></div>}
                         width="md"
                         placeholder="请输入名称"
                         rules={[
@@ -105,7 +108,8 @@ function Signup() {
                     />
                     <ProFormText.Password
                         name="password"
-                        label={<div>密码<span style={{fontSize:'12px', color: 'gray'}}>（至少由字母和数字组成，长度为8到16位）</span></div>}
+                        label={<div>密码<span
+                            style={{fontSize: '12px', color: 'gray'}}>（至少由字母和数字组成，长度为8到16位）</span></div>}
                         width="md"
                         placeholder="请输入密码"
                         rules={[
@@ -118,7 +122,8 @@ function Signup() {
                     />
                     <ProFormText.Password
                         name="repeat"
-                        label={<div>确认密码<span style={{fontSize:'12px', color: 'gray'}}>（与输入密码一致）</span></div>}
+                        label={<div>确认密码<span style={{fontSize: '12px', color: 'gray'}}>（与输入密码一致）</span>
+                        </div>}
                         width="md"
                         placeholder="请重复输入密码"
                         rules={[
@@ -192,7 +197,7 @@ function Signup() {
                   >
                     <ProFormText
                         name="cpName"
-                        label={<div>公司名称<span style={{fontSize:'12px', color: 'gray'}}>（公司完整名称）</span></div>}
+                        label={<div>公司名称<span style={{fontSize: '12px', color: 'gray'}}>（公司完整名称）</span></div>}
                         width="md"
                         rules={[
                           {required: true, whitespace: true},
@@ -200,7 +205,8 @@ function Signup() {
                     />
                     <ProFormText
                         name="cpCode"
-                        label={<div>公司信用代码<span style={{fontSize:'12px', color: 'gray'}}>（18位统一社会信用代码）</span></div>}
+                        label={<div>公司信用代码<span
+                            style={{fontSize: '12px', color: 'gray'}}>（18位统一社会信用代码）</span></div>}
                         width="md"
                         rules={[
                           {required: true, whitespace: true},
@@ -211,7 +217,10 @@ function Signup() {
                     />
                     <ProFormText
                         name="cpMobile"
-                        label={<div>公司联系电话<span style={{fontSize:'12px', color: 'gray'}}>（11位手机号码，或固话号码(格式如：0757-12345678)）</span></div>}
+                        label={<div>公司联系电话<span style={{
+                          fontSize: '12px',
+                          color: 'gray'
+                        }}>（11位手机号码，或固话号码(格式如：0757-12345678)）</span></div>}
                         width="md"
                         rules={[
                           {required: true, whitespace: true},
@@ -234,7 +243,9 @@ function Signup() {
                         max={1}
                         accept="image/*"
                         name="cpFiles"
-                        label={<div>营业执照<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
+                        label={<div>营业执照<span
+                            style={{fontSize: '12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span>
+                        </div>}
                         action="/api/o/upload"
                         fieldProps={{
                           listType: 'picture-card'
@@ -265,7 +276,7 @@ function Signup() {
                   >
                     <ProFormText
                         name="rpName"
-                        label={<div>法人姓名<span style={{fontSize:'12px', color: 'gray'}}>（2到6个汉字）</span></div>}
+                        label={<div>法人姓名<span style={{fontSize: '12px', color: 'gray'}}>（2到6个汉字）</span></div>}
                         width="md"
                         placeholder="请输入法人姓名"
                         rules={[
@@ -275,7 +286,8 @@ function Signup() {
                     />
                     <ProFormText
                         name="rpCode"
-                        label={<div>法人身份证号码<span style={{fontSize:'12px', color: 'gray'}}>（18位身份证号码）</span></div>}
+                        label={<div>法人身份证号码<span
+                            style={{fontSize: '12px', color: 'gray'}}>（18位身份证号码）</span></div>}
                         width="md"
                         placeholder="请输入法人身份证号码"
                         rules={[
@@ -288,7 +300,8 @@ function Signup() {
                     />
                     <ProFormText
                         name="rpMobile"
-                        label={<div>法人联系电话<span style={{fontSize:'12px', color: 'gray'}}>（11位手机号码）</span></div>}
+                        label={<div>法人联系电话<span style={{fontSize: '12px', color: 'gray'}}>（11位手机号码）</span>
+                        </div>}
                         width="md"
                         placeholder="请输入法人联系电话"
                         rules={[
@@ -318,7 +331,9 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="rpFiles1"
-                        label={<div>身份证国徽面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
+                        label={<div>身份证国徽面<span
+                            style={{fontSize: '12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span>
+                        </div>}
                         accept="image/*"
                         action="/api/o/upload"
                         fieldProps={{
@@ -331,7 +346,9 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="rpFiles2"
-                        label={<div>身份证人像面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
+                        label={<div>身份证人像面<span
+                            style={{fontSize: '12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span>
+                        </div>}
                         accept="image/*"
                         action="/api/o/upload"
                         fieldProps={{
@@ -374,7 +391,7 @@ function Signup() {
                   >
                     <ProFormText
                         name="opName"
-                        label={<div>操作人姓名<span style={{fontSize:'12px', color: 'gray'}}>（2到6个汉字）</span></div>}
+                        label={<div>操作人姓名<span style={{fontSize: '12px', color: 'gray'}}>（2到6个汉字）</span></div>}
                         width="md"
                         placeholder="请输入操作人姓名"
                         rules={[
@@ -384,7 +401,8 @@ function Signup() {
                     />
                     <ProFormText
                         name="opCode"
-                        label={<div>操作人身份证号码<span style={{fontSize:'12px', color: 'gray'}}>（18位身份证号码）</span></div>}
+                        label={<div>操作人身份证号码<span
+                            style={{fontSize: '12px', color: 'gray'}}>（18位身份证号码）</span></div>}
                         width="md"
                         placeholder="请输入操作人身份证号码"
                         rules={[
@@ -397,7 +415,8 @@ function Signup() {
                     />
                     <ProFormText
                         name="opMobile"
-                        label={<div>操作人联系电话<span style={{fontSize:'12px', color: 'gray'}}>（11位手机号码）</span></div>}
+                        label={<div>操作人联系电话<span style={{fontSize: '12px', color: 'gray'}}>（11位手机号码）</span>
+                        </div>}
                         width="md"
                         placeholder="请输入操作人联系电话"
                         rules={[
@@ -427,7 +446,9 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="opFiles1"
-                        label={<div>身份证国徽面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
+                        label={<div>身份证国徽面<span
+                            style={{fontSize: '12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span>
+                        </div>}
                         accept="image/*"
                         action="/api/o/upload"
                         fieldProps={{
@@ -440,7 +461,9 @@ function Signup() {
                     <ProFormUploadDragger
                         max={1}
                         name="opFiles2"
-                        label={<div>身份证人像面<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
+                        label={<div>身份证人像面<span
+                            style={{fontSize: '12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span>
+                        </div>}
                         accept="image/*"
                         action="/api/o/upload"
                         fieldProps={{

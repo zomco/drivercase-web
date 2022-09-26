@@ -3,16 +3,13 @@ import {useAuth} from "../../hooks/useAuth";
 import logo from "./logo.png";
 import React, {useEffect, useState} from 'react';
 import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
-import {SettingFilled, SmileFilled,} from '@ant-design/icons';
-import {Alert} from 'antd';
-import Marquee from 'react-fast-marquee';
-import moment from 'moment';
+import {LogoutOutlined, TeamOutlined, TrademarkOutlined} from '@ant-design/icons';
 
 
 function AdminMainLayout() {
   const navigate = useNavigate();
-  const {user, get} = useAuth();
-  const [count, setCount] = useState<AdminCountResult>({ user: '0', caze: '0' });
+  const {user, get, logout} = useAuth();
+  const [count, setCount] = useState<AdminCountResult>({user: '0', caze: '0'});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,14 +35,19 @@ function AdminMainLayout() {
               {
                 path: '/admin/user',
                 name: '用户',
-                icon: <SmileFilled style={ parseInt(count.user) !== 0 ? { color: '#ff6633' } : {} } />
+                icon: <TrademarkOutlined style={parseInt(count.user) !== 0 ? {color: '#ff6633'} : {}} />
               },
               {
                 path: '/admin/case',
                 name: '事件',
-                icon: <SmileFilled style={ parseInt(count.caze) !== 0 ? { color: '#ff6633' } : {} } />
+                icon: <TeamOutlined style={parseInt(count.caze) !== 0 ? {color: '#ff6633'} : {}} />
               },
             ]
+          }}
+          actionsRender={(props) => {
+            return [
+              <LogoutOutlined key="LogoutOutlined" onClick={() => logout()} />,
+            ];
           }}
           menuItemRender={(item, dom) => <div onClick={() => navigate(item.path || '/')}>{dom}</div>}
       >

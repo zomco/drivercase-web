@@ -41,7 +41,7 @@ function Write() {
           >
             <ProFormText
                 name="name"
-                label={<div>司机姓名<span style={{fontSize:'12px', color: 'gray'}}>（2到6个汉字）</span></div>}
+                label={<div>司机姓名<span style={{fontSize: '12px', color: 'gray'}}>（2到6个汉字）</span></div>}
                 width="md"
                 placeholder="请输入法人姓名"
                 rules={[
@@ -51,7 +51,7 @@ function Write() {
             />
             <ProFormText
                 name="code"
-                label={<div>司机身份证号码<span style={{fontSize:'12px', color: 'gray'}}>（18位身份证号码）</span></div>}
+                label={<div>司机身份证号码<span style={{fontSize: '12px', color: 'gray'}}>（18位身份证号码）</span></div>}
                 width="md"
                 placeholder="请输入法人身份证号码"
                 rules={[
@@ -69,15 +69,24 @@ function Write() {
                 width="md"
                 options={[
                   {
-                    label: <span>匿名发布<span style={{fontSize:'12px', color: 'gray'}}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）</span></span>,
+                    label: <span>匿名发布<span style={{
+                      fontSize: '12px',
+                      color: 'gray'
+                    }}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）</span></span>,
                     value: 'PRIVATE',
                   },
                   {
-                    label: <span>可联系发布<span style={{fontSize:'12px', color: 'gray'}}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）</span></span>,
+                    label: <span>可联系发布<span style={{
+                      fontSize: '12px',
+                      color: 'gray'
+                    }}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）</span></span>,
                     value: 'AUTHORIZE',
                   },
                   {
-                    label: <span>公开发布<span style={{fontSize:'12px', color: 'gray'}}>（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）</span></span>,
+                    label: <span>公开发布<span style={{
+                      fontSize: '12px',
+                      color: 'gray'
+                    }}>（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）</span></span>,
                     value: 'PUBLIC',
                   },
                 ]}
@@ -101,7 +110,8 @@ function Write() {
             <ProFormUploadDragger
                 accept="image/png,image/jpeg"
                 name="files"
-                label={<div>事件附件<span style={{fontSize:'12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
+                label={<div>事件附件<span
+                    style={{fontSize: '12px', color: 'gray'}}>（后缀为.png，.jpg且大小不超过10MB的图片）</span></div>}
                 action="/api/o/upload"
                 fieldProps={{
                   listType: 'picture-card'
