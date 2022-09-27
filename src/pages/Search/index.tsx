@@ -141,7 +141,7 @@ function Search() {
                             }
                           }}
                       >获取该公司联系方式</Button> : null,
-                  !!row.files.length ? <a key="detail" href={`/case/${row.id}`} target="_blank">附件</a> : null,
+                  !!row.files && !!row.files.length ? <a key="detail" href={`/case/${row.id}`} target="_blank">附件</a> : null,
                 ]
               }
             },

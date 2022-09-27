@@ -54,6 +54,19 @@ function Home() {
                 },
               },
               {
+                title: '隐私度',
+                dataIndex: 'visibility',
+                filters: true,
+                onFilter: true,
+                valueType: 'select',
+                width: '100px',
+                valueEnum: {
+                  PRIVATE: {text: '匿名发布', status: 'Default'},
+                  PUBLIC: {text: '可联系发布', status: 'Success'},
+                  AUTHORIZE: {text: '公开发布', status: 'Processing'},
+                },
+              },
+              {
                 title: '状态',
                 dataIndex: 'status',
                 filters: true,
