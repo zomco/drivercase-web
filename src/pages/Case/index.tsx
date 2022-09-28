@@ -56,7 +56,7 @@ function Case() {
               render: (text, record, index, action) => (
                   <Image.PreviewGroup>
                     {
-                      record.files.map((value: any) =>
+                      !!record.files && record.files.map((value: any) =>
                           <Image
                               width="25vw"
                               src={value.value}

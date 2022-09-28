@@ -62,8 +62,8 @@ function Home() {
                 width: '100px',
                 valueEnum: {
                   PRIVATE: {text: '匿名发布', status: 'Default'},
-                  PUBLIC: {text: '可联系发布', status: 'Success'},
-                  AUTHORIZE: {text: '公开发布', status: 'Processing'},
+                  PUBLIC: {text: '公开发布', status: 'Success'},
+                  AUTHORIZE: {text: '可联系发布', status: 'Processing'},
                 },
               },
               {
