@@ -54,18 +54,18 @@ function Case() {
               key: 'files',
               dataIndex: 'files',
               render: (text, record, index, action) => (
-                  <Image.PreviewGroup>
+                  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                     {
                       !!record.files && record.files.map((value: any) =>
                           <Image
-                              width="25vw"
+                              width="30%"
                               src={value.value}
                               key={value.id}
                               alt={value.name}
                           />
                       )
                     }
-                  </Image.PreviewGroup>
+                  </div>
               ),
             }
           ]}

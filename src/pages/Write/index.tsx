@@ -17,7 +17,7 @@ function Write() {
           <Result
               status="success"
               title="提交事件信息成功"
-              subTitle="管理员会花一些时间审核事件信息，审核期间可修改，请稍候"
+              subTitle="管理员会花一些时间审核事件信息，审核期间可修改，请稍候。审核期1~2工作日。"
               extra={[
                 <Button key="edit" type="primary" onClick={() => navigate(`/edit/${id}`)}>前往修改</Button>,
                 <Button key="home" type="primary" onClick={() => navigate('/')}>查看我的事件</Button>,
@@ -72,21 +72,21 @@ function Write() {
                     label: <span>匿名发布<span style={{
                       fontSize: '12px',
                       color: 'gray'
-                    }}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。）</span></span>,
+                    }}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地）。事件附件仅只作审核用，不会公开。）</span></span>,
                     value: 'PRIVATE',
                   },
                   {
                     label: <span>可联系发布<span style={{
                       fontSize: '12px',
                       color: 'gray'
-                    }}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。）</span></span>,
+                    }}>（在其他用户搜索出该事件时，贵司仅显示为**省**市**区一企业（**为实际公司所属地），但可点击“联系贵司”，贵司在同意的情况下，系统会将贵司公司名称和联系电话推送给对方，方便双方核实信息。事件附件仅作审核用，不会公开，同意联系后，也不会在本平台内公布。）</span></span>,
                     value: 'AUTHORIZE',
                   },
                   {
                     label: <span>公开发布<span style={{
                       fontSize: '12px',
                       color: 'gray'
-                    }}>（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。）</span></span>,
+                    }}>（在其他用户搜索出该事件时，贵司显示公司名称和联系电话，方便双方核实信息。事件附件将会公开发布。）</span></span>,
                     value: 'PUBLIC',
                   },
                 ]}

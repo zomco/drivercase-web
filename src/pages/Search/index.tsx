@@ -7,19 +7,7 @@ import {CaseSource, CaseVisibility, ContactStatus} from "../../enums";
 import {PERSON_CODE_REGEXP, PERSON_NAME_REGEXP} from "../../utils/string";
 
 const validateDriver = (fields: any) => {
-  if (!fields['name'] && !fields['code']) {
-    // console.log('普通搜索');
-    return true;
-  }
-  if (!fields['name'] || !fields['code']) {
-    // console.log('名字和身份证必须同时出现');
-    return false;
-  }
-
-  if (!fields['fuzzy']) {
-    // console.log('精准搜索');
-    return PERSON_NAME_REGEXP.test(fields['name']) && PERSON_CODE_REGEXP.test(fields['code']);
-  } else {
+  if (!!fields['fuzzy'] && !!fields['name'] && !!fields['code']) {
     // console.log('模糊搜索');
     // 匹配名字
     const nameLength = fields['name'].length;
@@ -61,7 +49,14 @@ const validateDriver = (fields: any) => {
     });
     // console.log('code matching:', code1Length, code2Length);
     return !(code2Length < 8 || code1Length + code2Length !== codeLength);
-
+  } else if (!!fields['fuzzy'] && !!fields['name'] && !fields['code']) {
+    return PERSON_NAME_REGEXP.test(fields['name']);
+  } else if (!!fields['fuzzy'] && !fields['name'] && !!fields['code']) {
+    return PERSON_CODE_REGEXP.test(fields['code']);
+  } else if (!fields['fuzzy'] && !!fields['name'] && !!fields['code']) {
+    return PERSON_NAME_REGEXP.test(fields['name']) && PERSON_CODE_REGEXP.test(fields['code']);
+  } else {
+    return true;
   }
 }
 
@@ -73,7 +68,13 @@ function Search() {
       <ProList
           search={{}}
           rowKey="name"
-          headerTitle="结果"
+          headerTitle={
+            <div>
+              <div style={{fontSize: '12px', color: 'gray'}}>普通查询：填写好需要查询人员的姓名、身份证全部信息，点击查询。</div>
+              <div style={{fontSize: '12px', color: 'gray'}}>模糊查询：1、填写好需要查询人员的姓名、身份证部分信息，对不完全信息使用“*”代替，勾选“模糊查询”，点击查询。（如张三，441234********1234；李*四，441234200001011234）</div>
+              <div style={{fontSize: '12px', color: 'gray', marginLeft: '60px'}}>2、填写好需要查询人员的姓名或身份证其中一项全部信息，勾选“模糊查询”，点击查询。</div>
+            </div>
+          }
           request={async ({current, pageSize, ...fields}, sort, filter) => {
             console.log(current, pageSize, fields, sort, filter);
             if (!validateDriver(fields)) {

@@ -32,6 +32,18 @@ function ProtectedMainLayout() {
           splitMenus
           logo={logo}
           title={user.cpName}
+          token={{
+            header: {
+              // colorTextMenuSelected: '#fff',
+              // colorBgMenuItemSelected: '#1E90FF',
+              colorBgMenuItemHover: '#1E90FF',
+              colorBgMenuItemCollapsedHover: '#1E90FF'
+            },
+            sider: {
+              colorBgMenuItemHover: '#1E90FF',
+              colorBgMenuItemCollapsedHover: '#1E90FF'
+            }
+          }}
           route={{
             path: '/',
             routes: [

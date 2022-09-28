@@ -59,18 +59,18 @@ function AdminUser() {
                   key: 'cpFiles',
                   dataIndex: 'cpFiles',
                   render: (text, record, index, action) => (
-                      <Image.PreviewGroup>
+                      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                         {
                           record.cpFiles?.map((value: any) =>
                               <Image
-                                  width="25vw"
+                                  width="30%"
                                   src={value.value}
                                   key={value.id}
                                   alt={value.name}
                               />
                           )
                         }
-                      </Image.PreviewGroup>
+                      </div>
                   ),
                 },
                 {
@@ -93,18 +93,18 @@ function AdminUser() {
                   key: 'rpFiles',
                   dataIndex: 'rpFiles',
                   render: (text, record, index, action) => (
-                      <Image.PreviewGroup>
+                      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                         {
                           record.rpFiles?.map((value: any) =>
                               <Image
-                                  width="25vw"
+                                  width="30%"
                                   src={value.value}
                                   key={value.id}
                                   alt={value.name}
                               />
                           )
                         }
-                      </Image.PreviewGroup>
+                      </div>
                   ),
                 },
                 {
@@ -127,18 +127,18 @@ function AdminUser() {
                   key: 'opFiles',
                   dataIndex: 'opFiles',
                   render: (text, record, index, action) => (
-                      <Image.PreviewGroup>
+                      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                         {
                           record.opFiles?.map((value: any) =>
                               <Image
-                                  width="25vw"
+                                  width="30%"
                                   src={value.value}
                                   key={value.id}
                                   alt={value.name}
                               />
                           )
                         }
-                      </Image.PreviewGroup>
+                      </div>
                   ),
                 }
               ]}
