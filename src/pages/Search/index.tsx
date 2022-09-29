@@ -65,7 +65,7 @@ function Search() {
   const navigate = useNavigate();
 
   return (
-      <ProList
+      <ProList<CaseResult>
           search={{}}
           rowKey="name"
           headerTitle={

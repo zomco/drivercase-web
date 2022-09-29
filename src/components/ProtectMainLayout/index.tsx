@@ -3,11 +3,12 @@ import {useAuth} from "../../hooks/useAuth";
 import logo from "./logo.png";
 import React, {useEffect, useState} from 'react';
 import {PageContainer, ProCard, ProLayout} from "@ant-design/pro-components";
-import {BankOutlined, SecurityScanOutlined, SettingFilled, UploadOutlined} from '@ant-design/icons';
+import {BankOutlined, SecurityScanOutlined, SettingFilled, UploadOutlined, DoubleRightOutlined} from '@ant-design/icons';
 import {Alert} from 'antd';
 import Marquee from 'react-fast-marquee';
 import moment from 'moment';
 import {CaseSource} from "../../enums";
+import { css } from '@emotion/css';
 
 
 function ProtectedMainLayout() {
@@ -32,18 +33,6 @@ function ProtectedMainLayout() {
           splitMenus
           logo={logo}
           title={user.cpName}
-          token={{
-            header: {
-              // colorTextMenuSelected: '#fff',
-              // colorBgMenuItemSelected: '#1E90FF',
-              colorBgMenuItemHover: '#1E90FF',
-              colorBgMenuItemCollapsedHover: '#1E90FF'
-            },
-            sider: {
-              colorBgMenuItemHover: '#1E90FF',
-              colorBgMenuItemCollapsedHover: '#1E90FF'
-            }
-          }}
           route={{
             path: '/',
             routes: [

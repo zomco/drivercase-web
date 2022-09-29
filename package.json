@@ -1,10 +1,10 @@
 {
-  "name": "my-app",
+  "name": "drivercase-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@ant-design/pro-components": "^2.3.7",
+    "@ant-design/pro-components": "^2.3.12",
     "@emotion/css": "^11.10.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -13,7 +13,7 @@
     "@types/node": "^16.11.56",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
-    "antd": "^4.23.1",
+    "antd": "^4.23.3",
     "axios": "^0.27.2",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",

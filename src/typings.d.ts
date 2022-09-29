@@ -143,6 +143,7 @@ type CaseResult = {
   review?: string,
   files?: MediaFileResult[],
   user: UserResult,
+  contact?: ContactResult,
   updateTime: string,
 }
 

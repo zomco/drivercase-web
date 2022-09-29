@@ -1,41 +1,43 @@
 @import '~antd/dist/antd.css';
-/*@import '~@ant-design/pro-components/dist/components.css';*/
 
-.App {
-    text-align: center;
+/* 标题字体 */
+.ant-pro-top-nav-header-logo h1{
+    font-size: 20px!important;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+.ant-pro-base-menu-menu-item {
+    font-size: 18px!important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+.ant-pro-base-menu-menu-item:hover {
+    background-color: #1E90FF!important;
+}
+
+.ant-pro {
+    height: auto;
+}
+
+/* 兼容IE边距 */
+@supports not (margin-block: auto) {
+
+    .ant-pro .ant-layout-header.ant-pro-layout-header {
+        padding-left: 8px;
+        padding-right: 8px;
     }
-}
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
+    .ant-pro-page-container-children-content  {
+        margin: 8px 40px;
     }
-    to {
-        transform: rotate(360deg);
+
+    .ant-pro-card-body {
+        padding: 24px 16px;
+    }
+
+    .ant-pro-card-body {
+        padding: 24px 16px;
+    }
+
+    .ant-pro-table-list-toolbar-container {
+        padding: 16px 0;
     }
 }
