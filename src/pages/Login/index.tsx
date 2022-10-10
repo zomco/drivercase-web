@@ -171,6 +171,15 @@ function Login() {
             {/*</a>*/}
           </div>
         </LoginForm>
+        <a
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '48px',
+            }}
+            href="https://beian.miit.gov.cn/#/Integrated/index"
+        >备案号:粤ICP备19130494号</a>
       </div>
   );
 }
