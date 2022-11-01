@@ -60,6 +60,9 @@ const validateDriver = (fields: any) => {
   }
 }
 
+let normalSearch = false;
+let emptyResult = true;
+
 function Search() {
   const {get, post} = useAuth();
   const navigate = useNavigate();
@@ -104,7 +107,7 @@ function Search() {
           metas={{
             title: {
               dataIndex: 'name',
-              title: '司机姓名',
+              title: '姓名',
               render: (text, row) => {
                 console.log(row.source);
                 if (row.source === CaseSource.ADMIN) {
@@ -148,7 +151,7 @@ function Search() {
             },
             code: {
               dataIndex: 'code',
-              title: '司机身份证',
+              title: '身份证',
             },
             fuzzy: {
               valueType: 'checkbox',
@@ -156,6 +159,25 @@ function Search() {
                 open: {
                   text: '模糊搜索',
                 },
+              }
+            }
+          }}
+          onSubmit={(params) => {
+            if (Array.isArray(params.fuzzy)) {
+              normalSearch = !params.fuzzy.length && !!params.name && !!params.code;
+            } else {
+              normalSearch = !params.fuzzy && !!params.name && !!params.code;
+            }
+          }}
+          onLoad={(source) => {
+            emptyResult = !source.length;
+          }}
+          onLoadingChange={(loading) => {
+            if (normalSearch && emptyResult && !loading) {
+              const dom = document.getElementsByClassName("ant-empty-description")[0];
+              if (dom) {
+                console.log("loading empty in normal search: ", dom);
+                dom.textContent = "此人在该平台无不良记录";
               }
             }
           }}
